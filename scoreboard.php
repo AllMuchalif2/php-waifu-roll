@@ -1,0 +1,1 @@
+<?php header(" Location: index.php?url=gacha/index\); exit; ?>
