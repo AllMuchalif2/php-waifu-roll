@@ -3,35 +3,45 @@ require_once 'app/Core/Database.php';
 require_once 'app/Models/Waifu.php';
 
 use App\Models\Waifu;
+use App\Core\Database;
 
 $waifuModel = new Waifu();
+$db = Database::getInstance()->getConnection();
+
+// Clear the pool first because previous seed had wrong IDs
+echo "Cleaning up waifu_pool...\n";
+$db->exec("SET FOREIGN_KEY_CHECKS = 0;");
+$db->exec("TRUNCATE TABLE user_waifus;");
+$db->exec("TRUNCATE TABLE limited_slots;");
+$db->exec("TRUNCATE TABLE waifu_pool;");
+$db->exec("SET FOREIGN_KEY_CHECKS = 1;");
 
 $characters = [
     // LIMITED (1)
-    ['id' => 38142, 'tier' => 'LIMITED'], // Hatsune Miku
+    ['id' => 16460, 'tier' => 'LIMITED'], // Hatsune Miku
     
     // SSR (5)
     ['id' => 118763, 'tier' => 'SSR'], // Rem
-    ['id' => 181966, 'tier' => 'SSR'], // Marin Kitagawa
-    ['id' => 171587, 'tier' => 'SSR'], // Makima
-    ['id' => 135315, 'tier' => 'SSR'], // Yor Forger
-    ['id' => 184513, 'tier' => 'SSR'], // Frieren
+    ['id' => 145946, 'tier' => 'SSR'], // Marin Kitagawa
+    ['id' => 144574, 'tier' => 'SSR'], // Makima
+    ['id' => 141979, 'tier' => 'SSR'], // Yor Forger
+    ['id' => 148194, 'tier' => 'SSR'], // Frieren
 
     // SR (10)
-    ['id' => 40128, 'tier' => 'SR'], // Mikasa Ackerman
-    ['id' => 117224, 'tier' => 'SR'], // Megumin
-    ['id' => 155679, 'tier' => 'SR'], // Zero Two
-    ['id' => 35252, 'tier' => 'SR'], // Kurisu Makise
+    ['id' => 40961, 'tier' => 'SR'], // Mikasa Ackerman
+    ['id' => 108399, 'tier' => 'SR'], // Megumin
+    ['id' => 155679, 'tier' => 'SR'], // Zero Two (Already correct before)
+    ['id' => 23251, 'tier' => 'SR'], // Kurisu Makise
     ['id' => 147813, 'tier' => 'SR'], // Shinobu Kochou
-    ['id' => 124518, 'tier' => 'SR'], // Violet Evergarden
+    ['id' => 141354, 'tier' => 'SR'], // Violet Evergarden
     ['id' => 161404, 'tier' => 'SR'], // Mai Sakurajima
     ['id' => 130704, 'tier' => 'SR'], // Kaguya Shinomiya
     ['id' => 113974, 'tier' => 'SR'], // Raphtalia
-    ['id' => 497, 'tier' => 'SR'], // Saber
+    ['id' => 114, 'tier' => 'SR'], // Saber
 
     // A (15)
-    ['id' => 118764, 'tier' => 'A'], // Emilia
-    ['id' => 146157, 'tier' => 'A'], // Nezuko Kamado
+    ['id' => 98845, 'tier' => 'A'], // Emilia
+    ['id' => 115206, 'tier' => 'A'], // Nezuko Kamado
     ['id' => 146115, 'tier' => 'A'], // Chika Fujiwara
     ['id' => 171590, 'tier' => 'A'], // Power
     ['id' => 94, 'tier' => 'A'], // Asuka
@@ -95,10 +105,11 @@ foreach ($characters as $char) {
         $waifuModel->create($data['jikan_id'], $data['name'], $data['image_url'], $char['tier']);
         echo "Success ({$data['name']} - {$char['tier']})\n";
     } else {
-        echo "Failed!\n";
+        echo "Failed! (Might be rate limit, wait a bit)\n";
+        sleep(2);
     }
     // Sleep to avoid rate limiting
-    usleep(500000); // 0.5 seconds
+    usleep(1000000); // 1 second delay
 }
 
 echo "Seeding completed!\n";

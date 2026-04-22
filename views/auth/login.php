@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Waifu Gacha</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -26,6 +26,8 @@
             <p style="margin-top: 1rem;">
                 Belum punya akun? <a href="index.php?url=auth/register" style="color: var(--accent2); font-weight: bold;">DAFTAR SINI</a>
             </p>
+            <hr style="border: 2px dashed black; margin: 1.5rem 0; opacity: 0.2;">
+            <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-house"></i> KEMBALI KE BERANDA</a>
         </div>
     </div>
 </body>

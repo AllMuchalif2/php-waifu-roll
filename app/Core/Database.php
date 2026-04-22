@@ -10,10 +10,17 @@ class Database {
     private $pdo;
 
     private function __construct() {
-        $host = 'localhost';
-        $dbname = 'waifu_gacha';
-        $username = 'root';
-        $password = '';
+        $envFile = BASE_PATH . '/.env';
+        if (!file_exists($envFile)) {
+            die("File .env tidak ditemukan! Silakan buat file .env berdasarkan .env.example");
+        }
+        
+        $env = parse_ini_file($envFile);
+        
+        $host = $env['DB_HOST'] ?? 'localhost';
+        $dbname = $env['DB_NAME'] ?? 'waifu_gacha';
+        $username = $env['DB_USER'] ?? 'root';
+        $password = $env['DB_PASS'] ?? '';
 
         try {
             $this->pdo = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8mb4", $username, $password);

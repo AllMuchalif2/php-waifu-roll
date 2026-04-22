@@ -74,4 +74,10 @@ class Waifu {
         $data = json_decode($response, true);
         return $data['data'] ?? [];
     }
+
+    public function existsByJikanId($jikan_id) {
+        $stmt = $this->db->prepare("SELECT id FROM waifu_pool WHERE jikan_id = ?");
+        $stmt->execute([$jikan_id]);
+        return (bool)$stmt->fetch();
+    }
 }

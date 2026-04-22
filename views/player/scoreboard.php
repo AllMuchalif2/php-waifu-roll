@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scoreboard - Waifu Gacha</title>
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -34,7 +34,11 @@
             </table>
         </div>
 
-        <a href="index.php?url=gacha/index" class="btn">BALIK KE DASHBOARD</a>
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <a href="index.php?url=gacha/index" class="btn"><i class="fa-solid fa-gauge-high"></i> BALIK KE DASHBOARD</a>
+        <?php else: ?>
+            <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-house"></i> KEMBALI KE BERANDA</a>
+        <?php endif; ?>
     </div>
 </body>
 </html>
