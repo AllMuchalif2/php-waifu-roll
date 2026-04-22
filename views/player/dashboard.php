@@ -4,11 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Waifu Gacha</title>
+        <link rel="icon" href="/assets/img/logo.png" type="image/png">
+
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body style="padding-bottom: 80px;"> <!-- Padding for bottom nav if needed -->
+<body style="padding-bottom: 80px;">
+    <nav class="navbar">
+        <a href="index.php" class="navbar-brand">
+            <img src="/assets/img/logo.png" alt="MYBINI Logo" class="navbar-logo">
+            <span>MYBINI</span>
+        </a>
+        <div style="display: flex; gap: 0.5rem;">
+            <a href="index.php?url=auth/logout" class="btn" style="margin-bottom: 0; padding: 0.5rem 1rem; font-size: 0.9rem; background: #555;">LOGOUT</a>
+        </div>
+    </nav>
     <div class="container">
+        <!-- Messages -->
+        <?php if (isset($_SESSION['success'])): ?>
+            <div class="result-box" style="background: var(--accent2); color: white; padding: 0.8rem; margin-top: 1rem;">
+                <i class="fa-solid fa-circle-check"></i> <?php echo $_SESSION['success']; unset($_SESSION['success']); ?>
+            </div>
+        <?php endif; ?>
+        <?php if (isset($_SESSION['error'])): ?>
+            <div class="result-box" style="background: var(--accent1); color: white; padding: 0.8rem; margin-top: 1rem;">
+                <i class="fa-solid fa-circle-xmark"></i> <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- Daily Reward -->
+        <?php 
+            $userModel = new \App\Models\User();
+            if ($userModel->canClaimDaily($_SESSION['user_id'])): 
+        ?>
+            <div class="result-box" style="background: var(--white); color: var(--black); margin-top: 1rem; text-align: center; border-style: dashed;">
+                <h3 style="color: var(--black); margin-bottom: 0.5rem; text-shadow: none;"><i class="fa-solid fa-gift"></i> HADIAH HARIAN TERSEDIA!</h3>
+                <a href="index.php?url=gacha/daily" class="btn" style="background: var(--accent2);">KLAIM SEKARANG!</a>
+            </div>
+        <?php endif; ?>
+
         <!-- Profile Header -->
         <div class="result-box" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem; margin-top: 1rem;">
             <div style="font-weight: 900; font-size: 1.2rem; text-transform: uppercase;">

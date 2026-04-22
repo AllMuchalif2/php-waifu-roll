@@ -3,15 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Waifu Gacha - Koleksi Waifu Impianmu!</title>
+    <title>MYBINI - Koleksi Waifu Impianmu!</title>
+    <link rel="icon" href="/assets/img/logo.png" type="image/png">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <nav class="navbar">
+        <a href="index.php" class="navbar-brand">
+            <img src="/assets/img/logo.png" alt="MYBINI Logo" class="navbar-logo">
+            <span>MYBINI</span>
+        </a>
+        <div style="display: flex; gap: 0.5rem;">
+            <?php if (isset($_SESSION['user_id'])): ?>
+                <a href="index.php?url=gacha/index" class="btn" style="margin-bottom: 0; padding: 0.5rem 1rem; font-size: 0.9rem;">DASHBOARD</a>
+            <?php else: ?>
+                <a href="index.php?url=auth/login" class="btn" style="margin-bottom: 0; padding: 0.5rem 1rem; font-size: 0.9rem;">LOGIN</a>
+            <?php endif; ?>
+        </div>
+    </nav>
+
     <!-- Navbar / Hero Section -->
     <header style="padding: 4rem 1rem; text-align: center; background: var(--secondary); border-bottom: 8px solid var(--black); margin-bottom: 3rem;">
         <div class="container">
-            <h1 style="font-size: 3.5rem; margin-bottom: 1rem;">WAIFU GACHA!</h1>
+            <h1 style="font-size: 3.5rem; margin-bottom: 1rem;">MYBINI!</h1>
             <p style="font-size: 1.2rem; font-weight: 700; text-transform: uppercase; margin-bottom: 2rem;">Kumpulkan waifu favoritmu dan jadilah nomor satu!</p>
             <div style="display: flex; gap: 1rem; justify-content: center;">
                 <a href="index.php?url=auth/login" class="btn" style="width: auto; padding: 1rem 3rem;">LOGIN</a>
@@ -74,7 +89,7 @@
     </div>
 
     <footer style="text-align: center; padding: 2rem; border-top: 4px solid var(--black); opacity: 0.8;">
-        <p>&copy; 2026 WAIFU GACHA - ALL RIGHTS RESERVED</p>
+        <p>&copy; 2026 MYBINI - ALL RIGHTS RESERVED</p>
     </footer>
 </body>
 </html>

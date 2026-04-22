@@ -33,4 +33,16 @@ class User {
     public function lastInsertId() {
         return $this->db->lastInsertId();
     }
+
+    public function canClaimDaily($user_id) {
+        $stmt = $this->db->prepare("SELECT last_daily_claim FROM users WHERE id = ?");
+        $stmt->execute([$user_id]);
+        $last = $stmt->fetchColumn();
+        return $last !== date('Y-m-d');
+    }
+
+    public function claimDaily($user_id) {
+        $stmt = $this->db->prepare("UPDATE users SET dice_count = dice_count + 5, coins = coins + 100, last_daily_claim = CURRENT_DATE WHERE id = ?");
+        return $stmt->execute([$user_id]);
+    }
 }

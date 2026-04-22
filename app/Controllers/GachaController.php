@@ -152,4 +152,15 @@ class GachaController extends Controller {
         $user = $this->userModel->findById($_SESSION['user_id']);
         $this->view('player/roll', ['user' => $user]);
     }
+
+    public function daily() {
+        $userId = $_SESSION['user_id'];
+        if ($this->userModel->canClaimDaily($userId)) {
+            $this->userModel->claimDaily($userId);
+            $_SESSION['success'] = "Daily Reward Berhasil Diklaim! +5 Dadu & +100 Koin.";
+        } else {
+            $_SESSION['error'] = "Anda sudah mengambil reward hari ini.";
+        }
+        $this->redirect('index.php?url=gacha/index');
+    }
 }

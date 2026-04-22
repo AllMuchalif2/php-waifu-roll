@@ -112,6 +112,16 @@
 </div>
 
 <script>
+// Trigger search on Enter
+document.getElementById('search_query').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') searchWaifu();
+});
+
+// Trigger fetch on Enter
+document.getElementById('jikan_id_input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') fetchWaifu();
+});
+
 function searchWaifu() {
     const query = document.getElementById('search_query').value;
     const resultsDiv = document.getElementById('search_results');
