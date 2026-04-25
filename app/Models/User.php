@@ -35,11 +35,12 @@ class User {
     }
 
     public function canClaimDaily($user_id) {
-        $stmt = $this->db->prepare("SELECT last_daily_claim FROM users WHERE id = ?");
+        $stmt = $this->db->prepare("SELECT last_daily_claim = CURRENT_DATE as claimed_today FROM users WHERE id = ?");
         $stmt->execute([$user_id]);
-        $last = $stmt->fetchColumn();
-        return $last !== date('Y-m-d');
+        $result = $stmt->fetch();
+        return !($result && $result['claimed_today']);
     }
+
 
     public function claimDaily($user_id) {
         $stmt = $this->db->prepare("UPDATE users SET dice_count = dice_count + 5, coins = coins + 100, last_daily_claim = CURRENT_DATE WHERE id = ?");

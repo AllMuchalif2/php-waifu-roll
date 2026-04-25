@@ -20,7 +20,7 @@ include BASE_PATH . '/views/partials/header.php';
         <div class="result-box bg-white color-black mt-2 text-left p-1 border-dashed no-min-height">
             <h3 class="color-black mb-05 no-shadow"><i class="fa-solid fa-circle-info"></i> ATURAN GACHA</h3>
             <div class="text-sm font-bold opacity-08">
-                <p class="mb-05">• Tier <span class="tier-c-text">C</span> s/d <span class="tier-ssr-text">SSR</span> bisa dimiliki banyak orang.</p>
+                <p class="mb-05">• Tier <span class="tier-c-text">C</span> s/d <span class="tier-ur-text">UR</span> bisa dimiliki banyak orang.</p>
                 <p class="mb-05 color-accent1">• Tier <span class="tier-limited-text">LIMITED</span> bersifat <span class="font-black">EKSKLUSIF & UNIK</span>.</p>
                 <p class="mb-05 pl-1" style="border-left: 4px solid var(--accent1); padding-left: 0.5rem;">
                     Hanya <span class="font-black" style="text-decoration: underline;">1 PLAYER</span> yang bisa memiliki 1 ID karakter LIMITED. Jika sudah ada yang punya, waifu tersebut <span class="font-black">TIDAK AKAN</span> bisa didapat lagi oleh orang lain!
@@ -56,17 +56,18 @@ include BASE_PATH . '/views/partials/header.php';
                         // Special Effects Trigger
                         const flash = document.createElement("div");
                         if (data.waifu.tier === 'SSR') flash.className = "screen-flash flash-ssr";
+                        if (data.waifu.tier === 'UR') flash.className = "screen-flash flash-ur";
                         if (data.waifu.tier === 'LIMITED') flash.className = "screen-flash flash-limited";
                         document.body.appendChild(flash);
                         setTimeout(() => flash.remove(), 1000);
 
-                        const cardClass = data.waifu.tier === 'SSR' ? 'ssr-glow' : (data.waifu.tier === 'LIMITED' ? 'limited-ultra' : '');
+                        const cardClass = data.waifu.tier === 'SSR' ? 'ssr-glow' : (data.waifu.tier === 'UR' ? 'ur-glow' : (data.waifu.tier === 'LIMITED' ? 'limited-ultra' : ''));
 
                         // Particle Burst Effect
-                        if (data.waifu.tier === 'SSR' || data.waifu.tier === 'LIMITED') {
-                            const count = data.waifu.tier === 'LIMITED' ? 50 : 20;
-                            const icon = data.waifu.tier === 'LIMITED' ? 'fa-crown' : 'fa-star';
-                            const color = '#f1c40f';
+                        if (['SSR', 'UR', 'LIMITED'].includes(data.waifu.tier)) {
+                            const count = data.waifu.tier === 'LIMITED' ? 50 : (data.waifu.tier === 'UR' ? 35 : 20);
+                            const icon = data.waifu.tier === 'LIMITED' ? 'fa-crown' : (data.waifu.tier === 'UR' ? 'fa-bolt' : 'fa-star');
+                            const color = data.waifu.tier === 'UR' ? '#e74c3c' : '#f1c40f';
                             
                             for (let i = 0; i < count; i++) {
                                 const p = document.createElement("i");

@@ -29,7 +29,7 @@ body {
   width: 100%;
   max-width: 480px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 1.25rem; /* Increased padding for better breathing room on mobile */
 }
 
 @media (min-width: 768px) {
@@ -49,7 +49,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0px 4px 0px var(--black);
+  box-shadow: 0px 6px 0px var(--black); /* Slightly deeper shadow */
 }
 
 .navbar-brand {
@@ -139,8 +139,9 @@ input:focus {
   padding: 1.5rem;
   text-align: center;
   margin-bottom: 1.5rem;
-  min-height: 150px;
+  min-height: auto; /* Allow content to dictate height */
   position: relative;
+  overflow: hidden; /* For comic style overflows */
 }
 
 /* Only animated cards have this class */
@@ -276,12 +277,13 @@ input {
 
 .error-text {
   background-color: var(--accent2);
-  color: var(--white);
-  padding: 0.5rem;
+  color: var(--black); /* Set to black as requested */
+  padding: 0.75rem;
   border: var(--comic-border);
   margin-bottom: 1rem;
-  font-weight: bold;
+  font-weight: 900;
   text-align: center;
+  box-shadow: 4px 4px 0px var(--black);
 }
 
 /* Gacha Grid */
@@ -327,12 +329,23 @@ input {
 .tier-a {
   background: #2980b9;
 }
+.tier-r {
+  background: #e67e22;
+}
+.tier-s {
+  background: #d35400;
+}
 .tier-sr {
   background: #8e44ad;
 }
 .tier-ssr {
   background: #f1c40f;
   color: black;
+}
+.tier-ur {
+  background: #e74c3c;
+  color: white;
+  box-shadow: 0 0 10px #e74c3c;
 }
 .tier-limited {
   background: linear-gradient(45deg, #f1c40f, #e67e22, #e74c3c);
@@ -350,11 +363,21 @@ input {
 .tier-a-text {
   color: #2980b9;
 }
+.tier-r-text {
+  color: #e67e22;
+}
+.tier-s-text {
+  color: #d35400;
+}
 .tier-sr-text {
   color: #8e44ad;
 }
 .tier-ssr-text {
   color: #e67e22;
+}
+.tier-ur-text {
+  color: #e74c3c;
+  font-weight: 900;
 }
 .tier-limited-text {
   color: #e74c3c;
@@ -401,6 +424,27 @@ input {
     0 0 40px #f39c12 !important;
   border-color: #f1c40f !important;
   animation: pulseGlow 1.5s infinite alternate !important;
+}
+
+.ur-glow {
+  box-shadow:
+    0 0 20px #e74c3c,
+    0 0 40px #c0392b !important;
+  border-color: #e74c3c !important;
+  animation: pulseGlowUR 1s infinite alternate !important;
+}
+
+@keyframes pulseGlowUR {
+  from {
+    box-shadow:
+      0 0 10px #e74c3c,
+      0 0 20px #c0392b;
+  }
+  to {
+    box-shadow:
+      0 0 30px #e74c3c,
+      0 0 60px #c0392b;
+  }
 }
 
 @keyframes pulseGlow {
@@ -473,6 +517,10 @@ input {
 .flash-ssr {
   animation: flashEffect 0.5s ease-out;
   background: white;
+}
+.flash-ur {
+  animation: flashEffect 0.6s ease-out;
+  background: #e74c3c;
 }
 .flash-limited {
   animation: flashEffect 0.8s ease-out;
@@ -740,14 +788,26 @@ input {
 .quick-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 2rem;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.quick-actions .btn {
+  margin-bottom: 0;
+  padding: 0.75rem 0.5rem;
+  font-size: 1rem;
 }
 
 .collection-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  grid-template-columns: repeat(2, 1fr); /* Force 2 columns on small mobile */
   gap: 1rem;
+}
+
+@media (min-width: 400px) {
+  .collection-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
 }
 
 /* Waifu Card Mini is already defined above with hover effects */

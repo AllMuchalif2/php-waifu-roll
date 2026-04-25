@@ -15,20 +15,20 @@ include BASE_PATH . '/views/partials/header.php';
         $userModel = new \App\Models\User();
         if ($userModel->canClaimDaily($_SESSION['user_id'])):
             ?>
-            <div class="result-box bg-white color-black mt-1 text-center border-dashed">
-                <h3 class="color-black mb-05 no-shadow"><i class="fa-solid fa-gift"></i> HADIAH HARIAN TERSEDIA!</h3>
-                <a href="index.php?url=gacha/daily" class="btn bg-accent2">KLAIM SEKARANG!</a>
+            <div class="result-box bg-white color-black mt-1 text-center border-dashed p-1">
+                <h3 class="color-black mb-05 no-shadow" style="font-size: 1rem;"><i class="fa-solid fa-gift"></i> HADIAH HARIAN TERSEDIA!</h3>
+                <a href="index.php?url=gacha/daily" class="btn bg-accent2 mb-0" style="padding: 0.75rem; font-size: 1rem;">KLAIM SEKARANG!</a>
             </div>
         <?php endif; ?>
 
         <!-- Profile Header -->
-        <div class="result-box profile-header">
-            <div class="font-black text-xl text-uppercase">
+        <div class="result-box profile-header mt-1">
+            <div class="font-black text-lg text-uppercase">
                 <i class="fa-solid fa-user"></i> <?php echo htmlspecialchars($user['username']); ?>
             </div>
-            <div class="font-bold">
+            <div class="font-bold flex gap-05">
                 <span class="color-accent2"><i class="fa-solid fa-coins"></i> <?php echo $user['coins']; ?></span>
-                <span class="mx-05">|</span>
+                <span class="opacity-02">|</span>
                 <span class="color-accent1"><i class="fa-solid fa-dice"></i> <?php echo $user['dice_count']; ?></span>
             </div>
         </div>
@@ -42,27 +42,27 @@ include BASE_PATH . '/views/partials/header.php';
 
         <!-- Dice Shop -->
         <div class="result-box bg-white color-black mt-1 text-center border-dashed p-1">
-            <h3 class="color-black mb-05 no-shadow"><i class="fa-solid fa-cart-shopping"></i> TOKO DADU</h3>
+            <h3 class="color-black mb-1 no-shadow" style="font-size: 1rem;"><i class="fa-solid fa-cart-shopping"></i> TOKO DADU</h3>
             <div class="flex-center gap-05 flex-wrap">
-                <form action="index.php?url=gacha/buyDice" method="POST">
+                <form action="index.php?url=gacha/buyDice" method="POST" style="flex: 1; min-width: 100px;">
                     <input type="hidden" name="amount" value="1">
-                    <button type="submit" class="btn bg-accent1 w-auto px-1 mb-0 text-xs"
+                    <button type="submit" class="btn bg-accent1 w-full px-05 mb-0 text-xs"
                         onclick="return confirm('Beli 1 Dadu (100 koin)?')">
-                        1 DADU (100 <i class="fa-solid fa-coins"></i>)
+                        1 <i class="fa-solid fa-dice"></i> (100 <i class="fa-solid fa-coins"></i>)
                     </button>
                 </form>
-                <form action="index.php?url=gacha/buyDice" method="POST">
+                <form action="index.php?url=gacha/buyDice" method="POST" style="flex: 1; min-width: 100px;">
                     <input type="hidden" name="amount" value="5">
-                    <button type="submit" class="btn bg-accent1 w-auto px-1 mb-0 text-xs"
+                    <button type="submit" class="btn bg-accent1 w-full px-05 mb-0 text-xs"
                         onclick="return confirm('Beli 5 Dadu (500 koin)?')">
-                        5 DADU (500 <i class="fa-solid fa-coins"></i>)
+                        5 <i class="fa-solid fa-dice"></i> (500 <i class="fa-solid fa-coins"></i>)
                     </button>
                 </form>
-                <form action="index.php?url=gacha/buyDice" method="POST">
+                <form action="index.php?url=gacha/buyDice" method="POST" style="flex: 1; min-width: 100px;">
                     <input type="hidden" name="amount" value="10">
-                    <button type="submit" class="btn bg-accent1 w-auto px-1 mb-0 text-xs"
+                    <button type="submit" class="btn bg-accent1 w-full px-05 mb-0 text-xs"
                         onclick="return confirm('Beli 10 Dadu (1000 koin)?')">
-                        10 DADU (1000 <i class="fa-solid fa-coins"></i>)
+                        10 <i class="fa-solid fa-dice"></i> (1k <i class="fa-solid fa-coins"></i>)
                     </button>
                 </form>
             </div>
@@ -98,8 +98,11 @@ include BASE_PATH . '/views/partials/header.php';
                         <option value="C" <?php echo $filters['tier'] == 'C' ? 'selected' : ''; ?>>C</option>
                         <option value="B" <?php echo $filters['tier'] == 'B' ? 'selected' : ''; ?>>B</option>
                         <option value="A" <?php echo $filters['tier'] == 'A' ? 'selected' : ''; ?>>A</option>
+                        <option value="R" <?php echo $filters['tier'] == 'R' ? 'selected' : ''; ?>>R</option>
+                        <option value="S" <?php echo $filters['tier'] == 'S' ? 'selected' : ''; ?>>S</option>
                         <option value="SR" <?php echo $filters['tier'] == 'SR' ? 'selected' : ''; ?>>SR</option>
                         <option value="SSR" <?php echo $filters['tier'] == 'SSR' ? 'selected' : ''; ?>>SSR</option>
+                        <option value="UR" <?php echo $filters['tier'] == 'UR' ? 'selected' : ''; ?>>UR</option>
                         <option value="LIMITED" <?php echo $filters['tier'] == 'LIMITED' ? 'selected' : ''; ?>>LM</option>
                     </select>
                 </div>
@@ -135,10 +138,10 @@ include BASE_PATH . '/views/partials/header.php';
                     </div>
                     <div class="text-xs font-black tier-<?php echo strtolower($w['tier']); ?>-text">
                         [<?php echo htmlspecialchars($w['tier']); ?>]
-                        <?php if ($w['tier'] === 'LIMITED'): ?>
-                            <span class="bg-black color-white px-02 text-8px">UNIK / 1 OF 1</span>
-                        <?php endif; ?>
                     </div>
+                    <?php if ($w['tier'] === 'LIMITED'): ?>
+                        <div class="bg-black color-white px-02 text-8px d-block mt-02">UNIK 1/1</div>
+                    <?php endif; ?>
                     <button type="button"
                         onclick="openSellModal('<?php echo addslashes($w['name']); ?>', '<?php echo $w['tier']; ?>', '<?php echo $w['image_url']; ?>', <?php echo $w['total']; ?>)"
                         class="btn mb-0 p-05 text-xs bg-accent2 mt-05">JUAL</button>
@@ -186,7 +189,17 @@ include BASE_PATH . '/views/partials/header.php';
     </div>
 
     <script>
-        const sellPrices = { 'C': 100, 'B': 200, 'A': 500, 'SR': 1000, 'SSR': 3000, 'LIMITED': 10000 };
+        const sellPrices = { 
+            'C': 100, 
+            'B': 200, 
+            'A': 400, 
+            'R': 600, 
+            'S': 800, 
+            'SR': 1200, 
+            'SSR': 3000, 
+            'UR': 6000, 
+            'LIMITED': 15000 
+        };
         let currentPricePerUnit = 0;
 
         function openSellModal(name, tier, img, maxQty) {

@@ -33,8 +33,11 @@
                     <option value="C">C</option>
                     <option value="B">B</option>
                     <option value="A">A</option>
+                    <option value="R">R</option>
+                    <option value="S">S</option>
                     <option value="SR">SR</option>
                     <option value="SSR">SSR</option>
+                    <option value="UR">UR</option>
                     <option value="LIMITED">LIMITED (1 UNIQUE)</option>
                 </select>
             </div>
@@ -59,8 +62,11 @@
             <option value="C">C</option>
             <option value="B">B</option>
             <option value="A">A</option>
+            <option value="R">R</option>
+            <option value="S">S</option>
             <option value="SR">SR</option>
             <option value="SSR">SSR</option>
+            <option value="UR">UR</option>
             <option value="LIMITED">LIMITED (1 UNIQUE)</option>
         </select>
         <div style="display: flex; gap: 1rem;">
@@ -88,8 +94,11 @@
                 <option value="C" <?php echo $filters['tier'] == 'C' ? 'selected' : ''; ?>>C</option>
                 <option value="B" <?php echo $filters['tier'] == 'B' ? 'selected' : ''; ?>>B</option>
                 <option value="A" <?php echo $filters['tier'] == 'A' ? 'selected' : ''; ?>>A</option>
+                <option value="R" <?php echo $filters['tier'] == 'R' ? 'selected' : ''; ?>>R</option>
+                <option value="S" <?php echo $filters['tier'] == 'S' ? 'selected' : ''; ?>>S</option>
                 <option value="SR" <?php echo $filters['tier'] == 'SR' ? 'selected' : ''; ?>>SR</option>
                 <option value="SSR" <?php echo $filters['tier'] == 'SSR' ? 'selected' : ''; ?>>SSR</option>
+                <option value="UR" <?php echo $filters['tier'] == 'UR' ? 'selected' : ''; ?>>UR</option>
                 <option value="LIMITED" <?php echo $filters['tier'] == 'LIMITED' ? 'selected' : ''; ?>>LIMITED</option>
             </select>
         </div>

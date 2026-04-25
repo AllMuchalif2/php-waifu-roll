@@ -9,11 +9,11 @@ include BASE_PATH . '/views/partials/header.php';
     <!-- Hero Section -->
     <header class="hero-section">
         <div class="container">
-            <h1 class="hero-title">MYBINI!</h1>
-            <p class="hero-subtitle">Kumpulkan waifu favoritmu dan jadilah nomor satu!</p>
-            <div class="flex-center gap-1">
-                <a href="index.php?url=auth/login" class="btn w-auto px-3">LOGIN</a>
-                <a href="index.php?url=auth/register" class="btn btn-secondary w-auto px-3">DAFTAR</a>
+            <h1 class="hero-title" style="font-size: clamp(3rem, 10vw, 5rem);">MYBINI</h1>
+            <p class="hero-subtitle">Koleksi Waifu Impian & Jadi yang Terkuat!</p>
+            <div class="flex-center gap-1 flex-wrap">
+                <a href="index.php?url=auth/login" class="btn w-auto px-3 mb-0">MASUK</a>
+                <a href="index.php?url=auth/register" class="btn btn-secondary w-auto px-3 mb-0">DAFTAR</a>
             </div>
         </div>
     </header>
@@ -71,8 +71,8 @@ include BASE_PATH . '/views/partials/header.php';
         <!-- CTA Section -->
         <section class="cta-section">
             <h2 class="cta-title">SIAP GACHA SEKARANG?</h2>
-            <p class="cta-subtitle">Waifu menunggu untuk kamu koleksi!</p>
-            <a href="index.php?url=auth/register" class="btn bg-white color-black border-black">GAS DAFTAR GRATIS!</a>
+            <p class="cta-subtitle">Ribuan Waifu Menantimu!</p>
+            <a href="index.php?url=auth/register" class="btn bg-white color-black border-black mb-0">GAS DAFTAR GRATIS!</a>
         </section>
     </div>
 
