@@ -1,5 +1,8 @@
 <h1>KELOLA WAIFU</h1>
 
+<!-- Messages -->
+<?php include BASE_PATH . '/views/partials/messages.php'; ?>
+
 <!-- Fetch & Add Section -->
 <div class="result-box" style="text-align: left;">
     <h2><i class="fa-solid fa-search"></i> CARI WAIFU (BY NAME)</h2>

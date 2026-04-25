@@ -91,7 +91,11 @@ class AdminController extends Controller {
 
     public function deleteWaifu() {
         if (isset($_GET['id'])) {
-            $this->waifuModel->delete($_GET['id']);
+            if ($this->waifuModel->delete($_GET['id'])) {
+                $_SESSION['success'] = "Waifu berhasil dihapus.";
+            } else {
+                $_SESSION['error'] = "Gagal hapus! Waifu ini sudah dimiliki oleh player.";
+            }
             $this->redirect('index.php?url=admin/waifus');
         }
     }

@@ -116,6 +116,9 @@ include BASE_PATH . '/views/partials/header.php';
                     </div>
                     <div class="text-xs font-black tier-<?php echo strtolower($w['tier']); ?>-text">
                         [<?php echo htmlspecialchars($w['tier']); ?>]
+                        <?php if ($w['tier'] === 'LIMITED'): ?>
+                            <span class="bg-black color-white px-02 text-8px">UNIK / 1 OF 1</span>
+                        <?php endif; ?>
                     </div>
                     <button type="button" 
                             onclick="openSellModal('<?php echo addslashes($w['name']); ?>', '<?php echo $w['tier']; ?>', '<?php echo $w['image_url']; ?>', <?php echo $w['total']; ?>)" 

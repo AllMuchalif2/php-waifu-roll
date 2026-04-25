@@ -108,7 +108,16 @@ class Waifu {
         return $stmt->execute([$name, $tier, $id]);
     }
 
+    public function hasOwners($id) {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM user_waifus WHERE waifu_id = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetchColumn() > 0;
+    }
+
     public function delete($id) {
+        if ($this->hasOwners($id)) {
+            return false;
+        }
         $stmt = $this->db->prepare("DELETE FROM waifu_pool WHERE id = ?");
         return $stmt->execute([$id]);
     }
