@@ -1,40 +1,31 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scoreboard - Waifu Gacha</title>
-    <link rel="icon" href="/assets/img/logo.png" type="image/png">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+<?php 
+$title = "Scoreboard - Waifu Gacha";
+include BASE_PATH . '/views/partials/header.php'; 
+?>
+
 <body>
-    <nav class="navbar">
-        <a href="index.php" class="navbar-brand">
-            <img src="/assets/img/logo.png" alt="MYBINI Logo" class="navbar-logo">
-            <span>MYBINI</span>
-        </a>
-    </nav>
+    <?php include BASE_PATH . '/views/partials/navbar.php'; ?>
+
     <div class="container">
         <h1>TOP PLAYERS</h1>
         
         <div class="result-box">
-            <table style="width: 100%; border-collapse: collapse; text-align: left;">
+            <table class="ranking-table">
                 <thead>
-                    <tr style="border-bottom: 3px solid black;">
-                        <th style="padding: 0.8rem;">#</th>
-                        <th style="padding: 0.8rem;">NAME</th>
-                        <th style="padding: 0.8rem;">WAIFU</th>
-                        <th style="padding: 0.8rem;">COINS</th>
+                    <tr class="border-b-3">
+                        <th>#</th>
+                        <th>NAME</th>
+                        <th>WAIFU</th>
+                        <th>COINS</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($rankings as $i => $r): ?>
-                    <tr style="border-bottom: 2px solid rgba(0,0,0,0.1); <?php echo ($i < 3) ? 'background: rgba(255,255,255,0.1);' : ''; ?>">
-                        <td style="padding: 0.8rem; font-weight: 900;"><?php echo $i + 1; ?></td>
-                        <td style="padding: 0.8rem; font-weight: 900; text-transform: uppercase;"><?php echo htmlspecialchars($r['username']); ?></td>
-                        <td style="padding: 0.8rem;"><i class="fa-solid fa-heart" style="color: var(--accent1);"></i> <?php echo $r['waifu_count']; ?></td>
-                        <td style="padding: 0.8rem;"><i class="fa-solid fa-coins" style="color: var(--accent2);"></i> <?php echo $r['coins']; ?></td>
+                    <tr class="ranking-row <?php echo ($i < 3) ? 'top-ranking-row' : ''; ?>">
+                        <td class="font-black"><?php echo $i + 1; ?></td>
+                        <td class="font-black text-uppercase"><?php echo htmlspecialchars($r['username']); ?></td>
+                        <td><i class="fa-solid fa-heart color-accent1"></i> <?php echo $r['waifu_count']; ?></td>
+                        <td><i class="fa-solid fa-coins color-accent2"></i> <?php echo $r['coins']; ?></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -44,8 +35,8 @@
         <?php if (isset($_SESSION['user_id'])): ?>
             <a href="index.php?url=gacha/index" class="btn"><i class="fa-solid fa-gauge-high"></i> BALIK KE DASHBOARD</a>
         <?php else: ?>
-            <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-house"></i> KEMBALI KE BERANDA</a>
+            <a href="/index.php" class="btn btn-secondary"><i class="fa-solid fa-house"></i> KEMBALI KE BERANDA</a>
         <?php endif; ?>
     </div>
-</body>
-</html>
+
+    <?php include BASE_PATH . '/views/partials/footer.php'; ?>

@@ -1,22 +1,11 @@
-<!DOCTYPE html>
-<html lang="id">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gacha Roll - Waifu Gacha</title>
-    <link rel="icon" href="/assets/img/logo.png" type="image/png">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+<?php 
+$title = "Gacha Roll - Waifu Gacha";
+include BASE_PATH . '/views/partials/header.php'; 
+?>
 
 <body>
-    <nav class="navbar">
-        <a href="index.php" class="navbar-brand">
-            <img src="/assets/img/logo.png" alt="MYBINI Logo" class="navbar-logo">
-            <span>MYBINI</span>
-        </a>
-    </nav>
+    <?php include BASE_PATH . '/views/partials/navbar.php'; ?>
+
     <div class="container">
         <a href="index.php?url=gacha/index" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> BALIK</a>
 
@@ -26,14 +15,12 @@
             <button id="roll-btn" class="btn">GAS GACHA!</button>
             <div id="gacha-result" style="margin-top: 1rem;"></div>
         </div>
-
     </div>
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const rollBtn = document.getElementById("roll-btn");
             const resultDiv = document.getElementById("gacha-result");
-            const slotsContainer = document.getElementById("slots-container");
             const diceCountSpan = document.getElementById("dice-count");
 
             if (rollBtn) {
@@ -130,6 +117,5 @@
 
         });
     </script>
-</body>
-
-</html>
+    
+    <?php include BASE_PATH . '/views/partials/footer.php'; ?>

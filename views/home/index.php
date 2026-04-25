@@ -1,95 +1,74 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MYBINI - Koleksi Waifu Impianmu!</title>
-    <link rel="icon" href="/assets/img/logo.png" type="image/png">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <nav class="navbar">
-        <a href="index.php" class="navbar-brand">
-            <img src="/assets/img/logo.png" alt="MYBINI Logo" class="navbar-logo">
-            <span>MYBINI</span>
-        </a>
-        <div style="display: flex; gap: 0.5rem;">
-            <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="index.php?url=gacha/index" class="btn" style="margin-bottom: 0; padding: 0.5rem 1rem; font-size: 0.9rem;">DASHBOARD</a>
-            <?php else: ?>
-                <a href="index.php?url=auth/login" class="btn" style="margin-bottom: 0; padding: 0.5rem 1rem; font-size: 0.9rem;">LOGIN</a>
-            <?php endif; ?>
-        </div>
-    </nav>
+<?php 
+$title = "MYBINI - Koleksi Waifu Impianmu!";
+include BASE_PATH . '/views/partials/header.php'; 
+?>
 
-    <!-- Navbar / Hero Section -->
-    <header style="padding: 4rem 1rem; text-align: center; background: var(--secondary); border-bottom: 8px solid var(--black); margin-bottom: 3rem;">
+<body>
+    <?php include BASE_PATH . '/views/partials/navbar.php'; ?>
+
+    <!-- Hero Section -->
+    <header class="hero-section">
         <div class="container">
-            <h1 style="font-size: 3.5rem; margin-bottom: 1rem;">MYBINI!</h1>
-            <p style="font-size: 1.2rem; font-weight: 700; text-transform: uppercase; margin-bottom: 2rem;">Kumpulkan waifu favoritmu dan jadilah nomor satu!</p>
-            <div style="display: flex; gap: 1rem; justify-content: center;">
-                <a href="index.php?url=auth/login" class="btn" style="width: auto; padding: 1rem 3rem;">LOGIN</a>
-                <a href="index.php?url=auth/register" class="btn btn-secondary" style="width: auto; padding: 1rem 3rem;">DAFTAR</a>
+            <h1 class="hero-title">MYBINI!</h1>
+            <p class="hero-subtitle">Kumpulkan waifu favoritmu dan jadilah nomor satu!</p>
+            <div class="flex-center gap-1">
+                <a href="index.php?url=auth/login" class="btn w-auto px-3">LOGIN</a>
+                <a href="index.php?url=auth/register" class="btn btn-secondary w-auto px-3">DAFTAR</a>
             </div>
         </div>
     </header>
 
     <div class="container">
         <!-- Top Waifus Section -->
-        <section style="margin-bottom: 4rem;">
-            <h2 style="font-size: 2rem;"><i class="fa-solid fa-fire"></i> TOP WAIFUS</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1.5rem;">
+        <section class="mb-4">
+            <h2 class="text-2xl"><i class="fa-solid fa-fire"></i> TOP WAIFUS</h2>
+            <div class="top-waifus-grid">
                 <?php foreach ($topWaifus as $w): ?>
-                    <div class="result-box" style="padding: 0.5rem; min-height: auto; border-color: var(--black);">
-                        <div class="tier-badge tier-<?php echo strtolower($w['tier']); ?>" style="position: absolute; top: -10px; right: -10px; transform: rotate(10deg); font-size: 0.8rem; z-index: 2;">
+                    <div class="result-box waifu-card-mini border-black">
+                        <div class="tier-badge tier-<?php echo strtolower($w['tier']); ?> tier-badge-floating rotate-10">
                             <?php echo $w['tier']; ?>
                         </div>
-                        <img src="<?php echo htmlspecialchars($w['image_url']); ?>" class="waifu-img" style="margin-top: 0; width: 100%; border-width: 3px;">
-                        <div style="font-size: 1rem; margin-top: 0.5rem; font-weight: 900;"><?php echo htmlspecialchars($w['name']); ?></div>
+                        <img src="<?php echo htmlspecialchars($w['image_url']); ?>" class="waifu-img m-0 w-full border-3">
+                        <div class="text-base mt-05 font-black"><?php echo htmlspecialchars($w['name']); ?></div>
                     </div>
                 <?php endforeach; ?>
             </div>
         </section>
 
         <!-- Scoreboard Preview -->
-        <section style="margin-bottom: 4rem;">
+        <section class="mb-4">
             <h2><i class="fa-solid fa-trophy"></i> TOP PLAYERS</h2>
             <div class="result-box">
-                <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                <table class="ranking-table">
                     <thead>
-                        <tr style="border-bottom: 4px solid black;">
-                            <th style="padding: 1rem;">#</th>
-                            <th style="padding: 1rem;">PLAYER</th>
-                            <th style="padding: 1rem;">WAIFU</th>
-                            <th style="padding: 1rem;">COINS</th>
+                        <tr class="border-b-4">
+                            <th>#</th>
+                            <th>PLAYER</th>
+                            <th>WAIFU</th>
+                            <th>COINS</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($rankings as $i => $r): ?>
-                        <tr style="border-bottom: 2px solid rgba(0,0,0,0.1);">
-                            <td style="padding: 1rem; font-weight: 900;"><?php echo $i + 1; ?></td>
-                            <td style="padding: 1rem; font-weight: 900; text-transform: uppercase;"><?php echo htmlspecialchars($r['username']); ?></td>
-                            <td style="padding: 1rem;"><i class="fa-solid fa-heart" style="color: var(--accent1);"></i> <?php echo $r['waifu_count']; ?></td>
-                            <td style="padding: 1rem;"><i class="fa-solid fa-coins" style="color: var(--accent2);"></i> <?php echo $r['coins']; ?></td>
+                        <tr class="ranking-row">
+                            <td class="font-black"><?php echo $i + 1; ?></td>
+                            <td class="font-black text-uppercase"><?php echo htmlspecialchars($r['username']); ?></td>
+                            <td><i class="fa-solid fa-heart color-accent1"></i> <?php echo $r['waifu_count']; ?></td>
+                            <td><i class="fa-solid fa-coins color-accent2"></i> <?php echo $r['coins']; ?></td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <a href="index.php?url=scoreboard/index" class="btn btn-secondary" style="margin-top: 1.5rem;">LIHAT SEMUA PERINGKAT</a>
+                <a href="index.php?url=scoreboard/index" class="btn btn-secondary mt-15">LIHAT SEMUA PERINGKAT</a>
             </div>
         </section>
 
         <!-- CTA Section -->
-        <section style="text-align: center; padding: 4rem 1rem; background: var(--accent1); border: 8px solid var(--black); box-shadow: 10px 10px 0px var(--black); margin-bottom: 4rem;">
-            <h2 style="text-shadow: none; color: black; margin-bottom: 1rem;">SIAP GACHA SEKARANG?</h2>
-            <p style="color: black; font-weight: 700; margin-bottom: 2rem;">Ribuan waifu menunggu untuk kamu koleksi!</p>
-            <a href="index.php?url=auth/register" class="btn" style="background: var(--white); color: var(--black); border-color: var(--black);">GAS DAFTAR GRATIS!</a>
+        <section class="cta-section">
+            <h2 class="cta-title">SIAP GACHA SEKARANG?</h2>
+            <p class="cta-subtitle">Ribuan waifu menunggu untuk kamu koleksi!</p>
+            <a href="index.php?url=auth/register" class="btn bg-white color-black border-black">GAS DAFTAR GRATIS!</a>
         </section>
     </div>
 
-    <footer style="text-align: center; padding: 2rem; border-top: 4px solid var(--black); opacity: 0.8;">
-        <p>&copy; 2026 MYBINI - ALL RIGHTS RESERVED</p>
-    </footer>
-</body>
-</html>
+    <?php include BASE_PATH . '/views/partials/footer.php'; ?>

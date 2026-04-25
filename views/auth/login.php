@@ -1,34 +1,32 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Waifu Gacha</title>
-    <link rel="icon" href="/assets/img/logo.png" type="image/png">
-    <link rel="stylesheet" href="/assets/css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
+<?php 
+$title = "Login - Waifu Gacha";
+include BASE_PATH . '/views/partials/header.php'; 
+?>
+
 <body>
-    <div class="container" style="display: flex; flex-direction: column; justify-content: center; min-height: 100vh;">
-        <div class="result-box">
-            <h1><i class="fa-solid fa-gamepad"></i> LOGIN</h1>
+    <div class="auth-wrapper">
+        <div class="result-box auth-card">
+            <h2 class="auth-title">MASUK KE MYBINI</h2>
+            
+            <?php include BASE_PATH . '/views/partials/messages.php'; ?>
 
-            <?php if (!empty($error)): ?>
-                <div class="error-text">
-                    <i class="fa-solid fa-triangle-exclamation"></i> <?php echo htmlspecialchars($error); ?>
+            <form action="index.php?url=auth/login" method="POST">
+                <div class="mb-15">
+                    <label class="form-label d-block font-black mb-05 text-uppercase">Username</label>
+                    <input type="text" name="username" required placeholder="Masukkan username...">
                 </div>
-            <?php endif; ?>
-
-            <form method="POST" action="index.php?url=auth/login">
-                <input type="text" name="username" placeholder="USERNAME" required>
-                <input type="password" name="password" placeholder="PASSWORD" required>
-                <button type="submit" class="btn">GAS LOGIN!</button>
+                <div class="mb-2">
+                    <label class="form-label d-block font-black mb-05 text-uppercase">Password</label>
+                    <input type="password" name="password" required placeholder="********">
+                </div>
+                <button type="submit" class="btn">MASUK SEKARANG!</button>
             </form>
-            <p style="margin-top: 1rem;">
-                Belum punya akun? <a href="index.php?url=auth/register" style="color: var(--accent2); font-weight: bold;">DAFTAR SINI</a>
+            
+            <p class="text-center mt-1 font-bold">
+                Belum punya akun? <a href="index.php?url=auth/register" class="tier-accent2-text font-bold">DAFTAR SINI</a>
             </p>
-            <hr style="border: 2px dashed black; margin: 1.5rem 0; opacity: 0.2;">
-            <a href="index.php" class="btn btn-secondary"><i class="fa-solid fa-house"></i> KEMBALI KE BERANDA</a>
+            <hr class="auth-hr">
+            <a href="/index.php" class="btn btn-secondary"><i class="fa-solid fa-house"></i> KEMBALI KE BERANDA</a>
         </div>
     </div>
 </body>
