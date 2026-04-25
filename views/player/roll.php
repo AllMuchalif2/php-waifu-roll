@@ -27,9 +27,6 @@
             <div id="gacha-result" style="margin-top: 1rem;"></div>
         </div>
 
-        <h2><i class="fa-solid fa-star"></i> 100 SLOT SSR</h2>
-        <p style="text-align: center; margin-bottom: 1rem; opacity: 0.8;">Pilih slot untuk rate SSR!</p>
-        <div id="slots-container" class="slots-grid"></div>
     </div>
 
     <script>
@@ -40,20 +37,19 @@
             const diceCountSpan = document.getElementById("dice-count");
 
             if (rollBtn) {
-                rollBtn.addEventListener("click", () => executeRoll(null));
+                rollBtn.addEventListener("click", () => executeRoll());
             }
 
-            async function executeRoll(slotNumber) {
-                if (rollBtn) rollBtn.disabled = true;
+            async function executeRoll() {
+                if (rollBtn.disabled) return;
+                
+                rollBtn.disabled = true;
+                const originalText = rollBtn.innerHTML;
                 resultDiv.innerHTML = '<h3><i class="fa-solid fa-spinner fa-spin"></i> LAGI GACHA...</h3>';
-
-                const formData = new FormData();
-                if (slotNumber !== null) formData.append("slot_number", slotNumber);
 
                 try {
                     const res = await fetch("index.php?url=gacha/executeRoll", {
-                        method: "POST",
-                        body: formData
+                        method: "POST"
                     });
                     const data = await res.json();
 
@@ -71,7 +67,7 @@
                         if (data.waifu.tier === 'SSR' || data.waifu.tier === 'LIMITED') {
                             const count = data.waifu.tier === 'LIMITED' ? 50 : 20;
                             const icon = data.waifu.tier === 'LIMITED' ? 'fa-crown' : 'fa-star';
-                            const color = data.waifu.tier === 'LIMITED' ? '#f1c40f' : '#f1c40f';
+                            const color = '#f1c40f';
                             
                             for (let i = 0; i < count; i++) {
                                 const p = document.createElement("i");
@@ -110,7 +106,6 @@
                     `;
                         // Update dice count
                         diceCountSpan.innerText = parseInt(diceCountSpan.innerText) - 1;
-                        if (slotsContainer) loadSlots();
                     } else {
                         resultDiv.innerHTML = `<div class="error-text">${data.error}</div>`;
                     }
@@ -118,31 +113,21 @@
                     resultDiv.innerHTML = `<div class="error-text">ERROR JARINGAN!</div>`;
                 }
 
-                setTimeout(() => {
-                    if (rollBtn) rollBtn.disabled = false;
-                }, 2000);
+                // Cooldown logic (3 seconds)
+                let cooldown = 3;
+                const timer = setInterval(() => {
+                    cooldown--;
+                    if (cooldown <= 0) {
+                        clearInterval(timer);
+                        rollBtn.disabled = false;
+                        rollBtn.innerHTML = originalText;
+                    } else {
+                        rollBtn.innerHTML = `<i class="fa-solid fa-clock"></i> TUNGGU (${cooldown}s)`;
+                    }
+                }, 1000);
+                rollBtn.innerHTML = `<i class="fa-solid fa-clock"></i> TUNGGU (${cooldown}s)`;
             }
 
-            async function loadSlots() {
-                if (!slotsContainer) return;
-                try {
-                    const res = await fetch("index.php?url=gacha/getSlots");
-                    const data = await res.json();
-                    slotsContainer.innerHTML = "";
-                    data.slots.forEach(slot => {
-                        const div = document.createElement("div");
-                        div.className = `slot-item ${slot.owner_id ? "claimed" : ""}`;
-                        div.innerText = slot.slot_number;
-                        if (!slot.owner_id) {
-                            div.style.cursor = "pointer";
-                            div.onclick = () => executeRoll(slot.slot_number);
-                        }
-                        slotsContainer.appendChild(div);
-                    });
-                } catch (e) { }
-            }
-
-            loadSlots();
         });
     </script>
 </body>

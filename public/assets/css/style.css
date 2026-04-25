@@ -113,6 +113,14 @@ h1, h2, h3 {
   background-color: var(--secondary);
 }
 
+.btn:disabled {
+  background-color: #555 !important;
+  cursor: not-allowed;
+  box-shadow: 2px 2px 0px var(--black) !important;
+  transform: translate(4px, 4px) !important;
+  opacity: 0.8;
+}
+
 .result-box {
   background-color: var(--secondary);
   padding: 1.5rem;

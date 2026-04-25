@@ -85,14 +85,19 @@ class GachaController extends Controller {
             if (empty($tiers[$selectedTier])) $selectedTier = 'SSR';
             if (empty($tiers[$selectedTier])) $selectedTier = 'C';
 
-            // Special logic for LIMITED
             if ($selectedTier === 'LIMITED') {
-                $waifuId = $tiers['LIMITED'][array_rand($tiers['LIMITED'])];
-                // Check if anyone owns this waifu
-                $stmtCheck = $this->db->prepare("SELECT id FROM user_waifus WHERE waifu_id = ? LIMIT 1");
-                $stmtCheck->execute([$waifuId]);
-                if ($stmtCheck->fetch()) {
-                    // Already owned! Fallback to SSR
+                // Find ALL available limited waifus (not owned by anyone)
+                $stmtAvailable = $this->db->query("
+                    SELECT id FROM waifu_pool 
+                    WHERE tier = 'LIMITED' 
+                    AND id NOT IN (SELECT waifu_id FROM user_waifus)
+                ");
+                $availableLimited = $stmtAvailable->fetchAll(\PDO::FETCH_COLUMN);
+
+                if (!empty($availableLimited)) {
+                    $waifuId = $availableLimited[array_rand($availableLimited)];
+                } else {
+                    // No available LIMITED waifus! Fallback to SSR
                     $selectedTier = 'SSR';
                     if (empty($tiers['SSR'])) $selectedTier = 'C';
                     $waifuId = $tiers[$selectedTier][array_rand($tiers[$selectedTier])];
@@ -101,28 +106,9 @@ class GachaController extends Controller {
                 $waifuId = $tiers[$selectedTier][array_rand($tiers[$selectedTier])];
             }
 
-            $isLimitedAttempt = isset($_POST['slot_number']) ? (int) $_POST['slot_number'] : null;
-
-            if ($isLimitedAttempt && $selectedTier === 'SSR') {
-                $stmt = $this->db->prepare("UPDATE limited_slots SET owner_id = ? WHERE slot_number = ? AND owner_id IS NULL");
-                $stmt->execute([$userId, $isLimitedAttempt]);
-
-                if ($stmt->rowCount() === 0) {
-                    $stmt = $this->db->prepare("INSERT INTO user_waifus (user_id, waifu_id) VALUES (?, ?)");
-                    $stmt->execute([$userId, $waifuId]);
-                    $message = "Slot sudah diambil orang lain. Anda dialihkan ke SSR biasa.";
-                } else {
-                    $stmt = $this->db->prepare("SELECT waifu_id FROM limited_slots WHERE slot_number = ?");
-                    $stmt->execute([$isLimitedAttempt]);
-                    $limited = $stmt->fetch();
-                    $waifuId = $limited['waifu_id'];
-                    $message = "Selamat! Anda berhasil mengamankan Slot #" . $isLimitedAttempt;
-                }
-            } else {
-                $stmt = $this->db->prepare("INSERT INTO user_waifus (user_id, waifu_id) VALUES (?, ?)");
-                $stmt->execute([$userId, $waifuId]);
-                $message = "Anda mendapatkan karakter tier " . $selectedTier;
-            }
+            $stmt = $this->db->prepare("INSERT INTO user_waifus (user_id, waifu_id) VALUES (?, ?)");
+            $stmt->execute([$userId, $waifuId]);
+            $message = "Anda mendapatkan karakter tier " . $selectedTier;
 
             $this->db->commit();
 
@@ -140,13 +126,6 @@ class GachaController extends Controller {
         exit;
     }
 
-    public function getSlots() {
-        $stmt = $this->db->query("SELECT * FROM limited_slots ORDER BY slot_number ASC");
-        $slots = $stmt->fetchAll();
-        header('Content-Type: application/json');
-        echo json_encode(['slots' => $slots]);
-        exit;
-    }
 
     public function roll() {
         $user = $this->userModel->findById($_SESSION['user_id']);
