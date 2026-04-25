@@ -51,16 +51,58 @@
                 if (slotNumber !== null) formData.append("slot_number", slotNumber);
 
                 try {
-                    const res = await fetch("index.php?url=gacha/roll", {
+                    const res = await fetch("index.php?url=gacha/executeRoll", {
                         method: "POST",
                         body: formData
                     });
                     const data = await res.json();
 
                     if (res.ok) {
+                        // Special Effects Trigger
+                        const flash = document.createElement("div");
+                        if (data.waifu.tier === 'SSR') flash.className = "screen-flash flash-ssr";
+                        if (data.waifu.tier === 'LIMITED') flash.className = "screen-flash flash-limited";
+                        document.body.appendChild(flash);
+                        setTimeout(() => flash.remove(), 1000);
+
+                        const cardClass = data.waifu.tier === 'SSR' ? 'ssr-glow' : (data.waifu.tier === 'LIMITED' ? 'limited-ultra' : '');
+
+                        // Particle Burst Effect
+                        if (data.waifu.tier === 'SSR' || data.waifu.tier === 'LIMITED') {
+                            const count = data.waifu.tier === 'LIMITED' ? 50 : 20;
+                            const icon = data.waifu.tier === 'LIMITED' ? 'fa-crown' : 'fa-star';
+                            const color = data.waifu.tier === 'LIMITED' ? '#f1c40f' : '#f1c40f';
+                            
+                            for (let i = 0; i < count; i++) {
+                                const p = document.createElement("i");
+                                p.className = `fa-solid ${icon}`;
+                                p.style.position = "fixed";
+                                p.style.color = color;
+                                p.style.left = "50vw";
+                                p.style.top = "50vh";
+                                p.style.zIndex = "10000";
+                                p.style.pointerEvents = "none";
+                                p.style.textShadow = "0 0 10px rgba(0,0,0,0.5)";
+                                document.body.appendChild(p);
+
+                                const angle = Math.random() * Math.PI * 2;
+                                const dist = Math.random() * 300 + 100;
+                                const tx = Math.cos(angle) * dist;
+                                const ty = Math.sin(angle) * dist;
+
+                                p.animate([
+                                    { transform: 'translate(-50%, -50%) scale(0) rotate(0deg)', opacity: 1 },
+                                    { transform: `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(${Math.random() * 2 + 1}) rotate(${Math.random() * 720}deg)`, opacity: 0 }
+                                ], {
+                                    duration: 1000 + Math.random() * 1000,
+                                    easing: 'cubic-bezier(0, .9, .57, 1)'
+                                }).onfinish = () => p.remove();
+                            }
+                        }
+
                         resultDiv.innerHTML = `
-                        <h2 style="color: var(--accent2);">${data.message}</h2>
-                        <div class="card" style="background: var(--white); color: var(--black); padding: 1rem; margin-top: 1rem;">
+                        <h2 style="color: var(--accent2);" class="gacha-reveal ${data.waifu.tier === 'LIMITED' ? 'limited-text-anim' : ''}">${data.message}</h2>
+                        <div class="card gacha-reveal ${cardClass}" style="background: var(--white); color: var(--black); padding: 1rem; margin-top: 1rem;">
                             <img src="${data.waifu.image_url}" class="waifu-img" style="border-width: 5px;">
                             <h3 style="text-shadow: none; color: black; margin-top: 1rem;">${data.waifu.name}</h3>
                             <span style="font-weight: 900; background: var(--accent1); color: white; padding: 4px 10px; border: 2px solid black;">TIER ${data.waifu.tier}</span>

@@ -28,6 +28,7 @@ class Waifu {
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'MYBINI-App/1.0');
         $response = curl_exec($ch);
         curl_close($ch);
         
@@ -61,11 +62,12 @@ class Waifu {
     }
 
     public function searchByName($name) {
-        $url = "https://api.jikan.moe/v4/characters?q=" . urlencode($name) . "&limit=5";
+        $url = "https://api.jikan.moe/v4/characters?q=" . urlencode($name) . "&limit=15&order_by=favorites&sort=desc";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'MYBINI-App/1.0');
         $response = curl_exec($ch);
         curl_close($ch);
         

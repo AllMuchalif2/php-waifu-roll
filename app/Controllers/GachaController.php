@@ -37,7 +37,7 @@ class GachaController extends Controller {
         ]);
     }
 
-    public function roll() {
+    public function executeRoll() {
         $userId = $_SESSION['user_id'];
         
         $stmt = $this->db->prepare("SELECT dice_count, last_roll_timestamp FROM users WHERE id = ?");
@@ -148,7 +148,7 @@ class GachaController extends Controller {
         exit;
     }
 
-    public function viewRoll() {
+    public function roll() {
         $user = $this->userModel->findById($_SESSION['user_id']);
         $this->view('player/roll', ['user' => $user]);
     }
