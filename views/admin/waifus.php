@@ -68,6 +68,51 @@
 </div>
 
 <!-- List Section -->
+<div class="result-box" style="text-align: left;">
+    <h2><i class="fa-solid fa-filter"></i> FILTER & SORT</h2>
+    <form action="index.php" method="GET" style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;">
+        <input type="hidden" name="url" value="admin/waifus">
+        
+        <div style="flex: 1; min-width: 200px;">
+            <label>CARI NAMA</label>
+            <input type="text" name="search" value="<?php echo htmlspecialchars($filters['search']); ?>" placeholder="Cari di database..." style="margin-bottom: 0;">
+        </div>
+
+        <div style="width: 120px;">
+            <label>TIER</label>
+            <select name="tier" class="btn" style="margin-bottom: 0; background: var(--white); color: var(--black); text-align: left; text-transform: none; padding: 0.8rem;">
+                <option value="">SEMUA</option>
+                <option value="C" <?php echo $filters['tier'] == 'C' ? 'selected' : ''; ?>>C</option>
+                <option value="B" <?php echo $filters['tier'] == 'B' ? 'selected' : ''; ?>>B</option>
+                <option value="A" <?php echo $filters['tier'] == 'A' ? 'selected' : ''; ?>>A</option>
+                <option value="SR" <?php echo $filters['tier'] == 'SR' ? 'selected' : ''; ?>>SR</option>
+                <option value="SSR" <?php echo $filters['tier'] == 'SSR' ? 'selected' : ''; ?>>SSR</option>
+                <option value="LIMITED" <?php echo $filters['tier'] == 'LIMITED' ? 'selected' : ''; ?>>LIMITED</option>
+            </select>
+        </div>
+
+        <div style="width: 150px;">
+            <label>URUTKAN</label>
+            <select name="sort" class="btn" style="margin-bottom: 0; background: var(--white); color: var(--black); text-align: left; text-transform: none; padding: 0.8rem;">
+                <option value="id" <?php echo $filters['sort'] == 'id' ? 'selected' : ''; ?>>TERBARU</option>
+                <option value="name" <?php echo $filters['sort'] == 'name' ? 'selected' : ''; ?>>NAMA</option>
+                <option value="tier" <?php echo $filters['sort'] == 'tier' ? 'selected' : ''; ?>>TIER</option>
+            </select>
+        </div>
+
+        <div style="width: 120px;">
+            <label>ORDER</label>
+            <select name="order" class="btn" style="margin-bottom: 0; background: var(--white); color: var(--black); text-align: left; text-transform: none; padding: 0.8rem;">
+                <option value="DESC" <?php echo $filters['order'] == 'DESC' ? 'selected' : ''; ?>>DESC</option>
+                <option value="ASC" <?php echo $filters['order'] == 'ASC' ? 'selected' : ''; ?>>ASC</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn" style="margin-bottom: 0; width: auto; padding: 0.8rem 1.5rem;">GAS FILTER</button>
+        <a href="index.php?url=admin/waifus" class="btn btn-secondary" style="margin-bottom: 0; width: auto; padding: 0.8rem 1.5rem;">RESET</a>
+    </form>
+</div>
+
 <div class="result-box">
     <h2><i class="fa-solid fa-list"></i> POOL WAIFU SAAT INI</h2>
     <div style="overflow-x: auto;">
@@ -108,6 +153,31 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="flex-center mt-2 gap-1" style="flex-wrap: wrap;">
+        <?php if ($pagination['total_pages'] > 1): ?>
+            <?php 
+                $queryParams = $_GET; 
+                unset($queryParams['url']);
+            ?>
+
+            <?php if ($pagination['current_page'] > 1): ?>
+                <?php $queryParams['page'] = $pagination['current_page'] - 1; ?>
+                <a href="index.php?url=admin/waifus&<?php echo http_build_query($queryParams); ?>" class="btn btn-secondary w-auto" style="padding: 0.5rem 1rem; margin-bottom: 0;">PREV</a>
+            <?php endif; ?>
+
+            <div class="result-box mb-0" style="padding: 0.5rem 1rem; min-height: auto; border-width: 2px;">
+                <span class="font-bold">PAGE <?php echo $pagination['current_page']; ?> / <?php echo $pagination['total_pages']; ?></span>
+                <div style="font-size: 0.7rem; opacity: 0.6;">TOTAL: <?php echo $pagination['total_items']; ?></div>
+            </div>
+
+            <?php if ($pagination['current_page'] < $pagination['total_pages']): ?>
+                <?php $queryParams['page'] = $pagination['current_page'] + 1; ?>
+                <a href="index.php?url=admin/waifus&<?php echo http_build_query($queryParams); ?>" class="btn btn-secondary w-auto" style="padding: 0.5rem 1rem; margin-bottom: 0;">NEXT</a>
+            <?php endif; ?>
+        <?php endif; ?>
     </div>
 </div>
 

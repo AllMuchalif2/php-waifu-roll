@@ -20,12 +20,41 @@ class AdminController extends Controller {
 
     public function index() {
         $admin = $this->adminModel->findById($_SESSION['admin_id']);
-        $this->view('admin/dashboard', ['admin' => $admin], 'admin');
+        $stats = $this->adminModel->getDashboardStats();
+        $this->view('admin/dashboard', [
+            'admin' => $admin,
+            'stats' => $stats
+        ], 'admin');
     }
 
     public function waifus() {
-        $waifus = $this->waifuModel->getAll();
-        $this->view('admin/waifus', ['waifus' => $waifus], 'admin');
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        if ($page < 1) $page = 1;
+        $limit = 15;
+        $offset = ($page - 1) * $limit;
+
+        $filters = [
+            'search' => $_GET['search'] ?? '',
+            'tier' => $_GET['tier'] ?? '',
+            'sort' => $_GET['sort'] ?? 'id',
+            'order' => $_GET['order'] ?? 'DESC',
+            'limit' => $limit,
+            'offset' => $offset
+        ];
+
+        $waifus = $this->waifuModel->getAll($filters);
+        $totalItems = $this->waifuModel->countAll($filters);
+        $totalPages = ceil($totalItems / $limit);
+
+        $this->view('admin/waifus', [
+            'waifus' => $waifus,
+            'filters' => $filters,
+            'pagination' => [
+                'current_page' => $page,
+                'total_pages' => $totalPages,
+                'total_items' => $totalItems
+            ]
+        ], 'admin');
     }
 
     public function addWaifu() {

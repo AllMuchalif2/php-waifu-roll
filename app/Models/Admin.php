@@ -28,4 +28,31 @@ class Admin {
         $stmt = $this->db->prepare("UPDATE admins SET last_login = NOW() WHERE id = ?");
         return $stmt->execute([$id]);
     }
+
+    public function getDashboardStats() {
+        $stats = [];
+        
+        // Total Players
+        $stmt = $this->db->query("SELECT COUNT(*) FROM users");
+        $stats['total_players'] = $stmt->fetchColumn();
+        
+        // Total Waifus
+        $stmt = $this->db->query("SELECT COUNT(*) FROM waifu_pool");
+        $stats['total_waifus'] = $stmt->fetchColumn();
+        
+        // Tier Breakdown
+        $stmt = $this->db->query("SELECT tier, COUNT(*) as count FROM waifu_pool GROUP BY tier");
+        $tierStats = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+        
+        $stats['tiers'] = [
+            'C' => $tierStats['C'] ?? 0,
+            'B' => $tierStats['B'] ?? 0,
+            'A' => $tierStats['A'] ?? 0,
+            'SR' => $tierStats['SR'] ?? 0,
+            'SSR' => $tierStats['SSR'] ?? 0,
+            'LIMITED' => $tierStats['LIMITED'] ?? 0,
+        ];
+        
+        return $stats;
+    }
 }

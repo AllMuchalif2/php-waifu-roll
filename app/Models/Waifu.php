@@ -12,9 +12,67 @@ class Waifu {
         $this->db = Database::getInstance()->getConnection();
     }
 
-    public function getAll() {
-        $stmt = $this->db->query("SELECT * FROM waifu_pool ORDER BY id DESC");
+    public function getAll($filters = []) {
+        $sql = "SELECT * FROM waifu_pool WHERE 1=1";
+        $params = [];
+
+        if (!empty($filters['search'])) {
+            $sql .= " AND name LIKE ?";
+            $params[] = "%" . $filters['search'] . "%";
+        }
+
+        if (!empty($filters['tier'])) {
+            $sql .= " AND tier = ?";
+            $params[] = $filters['tier'];
+        }
+
+        $sort = $filters['sort'] ?? 'id';
+        $order = $filters['order'] ?? 'DESC';
+        
+        $allowedSort = ['id', 'name', 'tier', 'jikan_id'];
+        $allowedOrder = ['ASC', 'DESC'];
+        
+        if (!in_array($sort, $allowedSort)) $sort = 'id';
+        if (!in_array($order, $allowedOrder)) $order = 'DESC';
+
+        $sql .= " ORDER BY $sort $order";
+
+        // Pagination
+        if (isset($filters['limit']) && isset($filters['offset'])) {
+            $sql .= " LIMIT ? OFFSET ?";
+            $params[] = (int)$filters['limit'];
+            $params[] = (int)$filters['offset'];
+        }
+
+        $stmt = $this->db->prepare($sql);
+        
+        // Bind params manually to ensure integers for LIMIT/OFFSET
+        foreach ($params as $i => $val) {
+            $type = is_int($val) ? PDO::PARAM_INT : PDO::PARAM_STR;
+            $stmt->bindValue($i + 1, $val, $type);
+        }
+        
+        $stmt->execute();
         return $stmt->fetchAll();
+    }
+
+    public function countAll($filters = []) {
+        $sql = "SELECT COUNT(*) FROM waifu_pool WHERE 1=1";
+        $params = [];
+
+        if (!empty($filters['search'])) {
+            $sql .= " AND name LIKE ?";
+            $params[] = "%" . $filters['search'] . "%";
+        }
+
+        if (!empty($filters['tier'])) {
+            $sql .= " AND tier = ?";
+            $params[] = $filters['tier'];
+        }
+
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchColumn();
     }
 
     public function create($jikan_id, $name, $image_url, $tier) {
