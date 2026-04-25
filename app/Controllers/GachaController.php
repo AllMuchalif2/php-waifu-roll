@@ -174,4 +174,79 @@ class GachaController extends Controller {
         }
         $this->redirect('index.php?url=gacha/index');
     }
+
+    public function buyDice() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userId = $_SESSION['user_id'];
+            $amount = isset($_POST['amount']) ? (int)$_POST['amount'] : 1;
+            $cost = $amount * 100;
+            
+            $user = $this->userModel->findById($userId);
+            
+            if ($user['coins'] < $cost) {
+                $_SESSION['error'] = "Koin tidak cukup!";
+                $this->redirect('index.php?url=gacha/index');
+            }
+
+            $this->db->beginTransaction();
+            try {
+                $this->userModel->removeCoins($userId, $cost);
+                $this->userModel->addDice($userId, $amount);
+                $this->db->commit();
+                $_SESSION['success'] = "Berhasil membeli $amount Dadu!";
+            } catch (\Exception $e) {
+                $this->db->rollBack();
+                $_SESSION['error'] = "Gagal membeli dadu.";
+            }
+            $this->redirect('index.php?url=gacha/index');
+        }
+    }
+
+    public function sellWaifu() {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userId = $_SESSION['user_id'];
+            $waifuName = $_POST['waifu_name'];
+            $quantity = isset($_POST['quantity']) ? (int)$_POST['quantity'] : 1;
+            
+            if ($quantity < 1) $quantity = 1;
+
+            $stmt = $this->db->prepare("SELECT id, tier FROM waifu_pool WHERE name = ?");
+            $stmt->execute([$waifuName]);
+            $waifu = $stmt->fetch();
+            
+            if (!$waifu) {
+                $_SESSION['error'] = "Waifu tidak valid.";
+                $this->redirect('index.php?url=gacha/index');
+            }
+
+            // Count how many they have
+            $stmt = $this->db->prepare("SELECT COUNT(*) FROM user_waifus WHERE user_id = ? AND waifu_id = ?");
+            $stmt->execute([$userId, $waifu['id']]);
+            $ownedCount = $stmt->fetchColumn();
+
+            if ($ownedCount < $quantity) {
+                $_SESSION['error'] = "Jumlah waifu tidak mencukupi.";
+                $this->redirect('index.php?url=gacha/index');
+            }
+
+            $prices = ['C' => 100, 'B' => 200, 'A' => 500, 'SR' => 1000, 'SSR' => 3000, 'LIMITED' => 10000];
+            $pricePerUnit = $prices[$waifu['tier']] ?? 100;
+            $totalPrice = $pricePerUnit * $quantity;
+
+            $this->db->beginTransaction();
+            try {
+                // Delete N instances
+                $stmt = $this->db->prepare("DELETE FROM user_waifus WHERE user_id = ? AND waifu_id = ? LIMIT $quantity");
+                $stmt->execute([$userId, $waifu['id']]);
+
+                $this->userModel->addCoins($userId, $totalPrice);
+                $this->db->commit();
+                $_SESSION['success'] = "Berhasil menjual $quantity x " . $waifuName . " seharga " . $totalPrice . " koin!";
+            } catch (\Exception $e) {
+                $this->db->rollBack();
+                $_SESSION['error'] = "Gagal menjual waifu.";
+            }
+            $this->redirect('index.php?url=gacha/index');
+        }
+    }
 }

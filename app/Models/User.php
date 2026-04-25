@@ -45,4 +45,19 @@ class User {
         $stmt = $this->db->prepare("UPDATE users SET dice_count = dice_count + 5, coins = coins + 100, last_daily_claim = CURRENT_DATE WHERE id = ?");
         return $stmt->execute([$user_id]);
     }
+
+    public function addCoins($userId, $amount) {
+        $stmt = $this->db->prepare("UPDATE users SET coins = coins + ? WHERE id = ?");
+        return $stmt->execute([$amount, $userId]);
+    }
+
+    public function removeCoins($userId, $amount) {
+        $stmt = $this->db->prepare("UPDATE users SET coins = coins - ? WHERE id = ?");
+        return $stmt->execute([$amount, $userId]);
+    }
+
+    public function addDice($userId, $amount) {
+        $stmt = $this->db->prepare("UPDATE users SET dice_count = dice_count + ? WHERE id = ?");
+        return $stmt->execute([$amount, $userId]);
+    }
 }

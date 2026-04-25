@@ -71,7 +71,7 @@ include BASE_PATH . '/views/partials/header.php';
         <!-- CTA Section -->
         <section class="cta-section">
             <h2 class="cta-title">SIAP GACHA SEKARANG?</h2>
-            <p class="cta-subtitle">Ribuan waifu menunggu untuk kamu koleksi!</p>
+            <p class="cta-subtitle">Waifu menunggu untuk kamu koleksi!</p>
             <a href="index.php?url=auth/register" class="btn bg-white color-black border-black">GAS DAFTAR GRATIS!</a>
         </section>
     </div>

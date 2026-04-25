@@ -151,6 +151,8 @@ input:focus {
   position: relative;
   transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
+  background-color: var(--white) !important;
+  color: var(--black) !important;
 }
 
 .waifu-card-mini:hover {
@@ -340,7 +342,7 @@ input {
 }
 
 .tier-c-text {
-  color: #7f8c8d;
+  color: #666;
 }
 .tier-b-text {
   color: #27ae60;
@@ -352,12 +354,11 @@ input {
   color: #8e44ad;
 }
 .tier-ssr-text {
-  color: #f1c40f;
+  color: #e67e22;
 }
 .tier-limited-text {
   color: #e74c3c;
   font-weight: 900;
-  text-shadow: 1px 1px 0px black;
 }
 
 @keyframes gradientShift {
@@ -819,6 +820,58 @@ input {
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
 }
 
-.top-ranking-row {
-  background: rgba(255, 255, 255, 0.1);
+/* Modal System */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background-color: var(--white);
+  padding: 2rem;
+  border: var(--comic-border);
+  box-shadow: 10px 10px 0px var(--black);
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  animation: bounceIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--black);
+}
+
+/* Alerts */
+.alert-box {
+  padding: 1rem;
+  margin-top: 1rem;
+  border: var(--comic-border);
+  box-shadow: 4px 4px 0px var(--black);
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  animation: bounceIn 0.3s ease;
 }
