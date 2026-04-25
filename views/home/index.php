@@ -1,6 +1,6 @@
-<?php 
+<?php
 $title = "MYBINI - Koleksi Waifu Impianmu!";
-include BASE_PATH . '/views/partials/header.php'; 
+include BASE_PATH . '/views/partials/header.php';
 ?>
 
 <body>
@@ -30,6 +30,11 @@ include BASE_PATH . '/views/partials/header.php';
                         </div>
                         <img src="<?php echo htmlspecialchars($w['image_url']); ?>" class="waifu-img m-0 w-full border-3">
                         <div class="text-base mt-05 font-black"><?php echo htmlspecialchars($w['name']); ?></div>
+                        <?php if ($w['tier'] === 'LIMITED' && !empty($w['owner_name'])): ?>
+                            <div class="text-xs font-black color-accent2 mt-02">
+                                <i class="fa-solid fa-crown"></i> PUNYA: <?php echo htmlspecialchars($w['owner_name']); ?>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -50,12 +55,12 @@ include BASE_PATH . '/views/partials/header.php';
                     </thead>
                     <tbody>
                         <?php foreach ($rankings as $i => $r): ?>
-                        <tr class="ranking-row">
-                            <td class="font-black"><?php echo $i + 1; ?></td>
-                            <td class="font-black text-uppercase"><?php echo htmlspecialchars($r['username']); ?></td>
-                            <td><i class="fa-solid fa-heart color-accent1"></i> <?php echo $r['waifu_count']; ?></td>
-                            <td><i class="fa-solid fa-coins color-accent2"></i> <?php echo $r['coins']; ?></td>
-                        </tr>
+                            <tr class="ranking-row">
+                                <td class="font-black"><?php echo $i + 1; ?></td>
+                                <td class="font-black text-uppercase"><?php echo htmlspecialchars($r['username']); ?></td>
+                                <td><i class="fa-solid fa-heart color-accent1"></i> <?php echo $r['waifu_count']; ?></td>
+                                <td><i class="fa-solid fa-coins color-accent2"></i> <?php echo $r['coins']; ?></td>
+                            </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>

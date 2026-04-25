@@ -21,19 +21,51 @@ class GachaController extends Controller {
     public function index() {
         $user = $this->userModel->findById($_SESSION['user_id']);
         
-        $stmtWaifu = $this->db->prepare("
+        $filters = [
+            'search' => $_GET['search'] ?? '',
+            'tier' => $_GET['tier'] ?? '',
+            'sort' => $_GET['sort'] ?? 'total',
+            'order' => $_GET['order'] ?? 'DESC'
+        ];
+
+        $sql = "
             SELECT w.name, w.image_url, w.tier, COUNT(uw.waifu_id) as total 
             FROM user_waifus uw 
             JOIN waifu_pool w ON uw.waifu_id = w.id 
             WHERE uw.user_id = ? 
-            GROUP BY uw.waifu_id
-        ");
-        $stmtWaifu->execute([$_SESSION['user_id']]);
+        ";
+        $params = [$_SESSION['user_id']];
+
+        if (!empty($filters['search'])) {
+            $sql .= " AND w.name LIKE ?";
+            $params[] = "%" . $filters['search'] . "%";
+        }
+
+        if (!empty($filters['tier'])) {
+            $sql .= " AND w.tier = ?";
+            $params[] = $filters['tier'];
+        }
+
+        $sql .= " GROUP BY uw.waifu_id";
+
+        $sortMapping = [
+            'total' => 'total',
+            'name' => 'w.name',
+            'tier' => 'w.tier'
+        ];
+        $sort = $sortMapping[$filters['sort']] ?? 'total';
+        $order = ($filters['order'] === 'ASC') ? 'ASC' : 'DESC';
+
+        $sql .= " ORDER BY $sort $order";
+
+        $stmtWaifu = $this->db->prepare($sql);
+        $stmtWaifu->execute($params);
         $waifus = $stmtWaifu->fetchAll();
 
         $this->view('player/dashboard', [
             'user' => $user,
-            'waifus' => $waifus
+            'waifus' => $waifus,
+            'filters' => $filters
         ]);
     }
 
