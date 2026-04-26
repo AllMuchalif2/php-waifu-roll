@@ -3,28 +3,25 @@ $title = "Gacha Roll - Waifu Gacha";
 include BASE_PATH . '/views/partials/header.php'; 
 ?>
 
-<body>
+<body class="pb-80">
     <?php include BASE_PATH . '/views/partials/navbar.php'; ?>
 
     <div class="container">
-        <a href="index.php?url=gacha/index" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> BALIK</a>
-
-        <div class="result-box">
-            <h1><i class="fa-solid fa-dice"></i> DADU: <span id="dice-count"><?php echo $user['dice_count']; ?></span>
+        <div class="card text-center">
+            <h1 style="font-size: 1.5rem; margin-bottom: 1.5rem;">
+                <i class="fa-solid fa-dice color-primary"></i> DADU: <span id="dice-count" class="color-danger"><?php echo $user['dice_count']; ?></span>
             </h1>
             <button id="roll-btn" class="btn">GAS GACHA!</button>
-            <div id="gacha-result" style="margin-top: 1rem;"></div>
+            <div id="gacha-result" style="margin-top: 1.5rem;"></div>
         </div>
 
         <!-- Info Tier -->
-        <div class="result-box bg-white color-black mt-2 text-left p-1 border-dashed no-min-height">
-            <h3 class="color-black mb-05 no-shadow"><i class="fa-solid fa-circle-info"></i> ATURAN GACHA</h3>
-            <div class="text-sm font-bold opacity-08">
-                <p class="mb-05">• Tier <span class="tier-c-text">C</span> s/d <span class="tier-ur-text">UR</span> bisa dimiliki banyak orang.</p>
-                <p class="mb-05 color-accent1">• Tier <span class="tier-limited-text">LIMITED</span> bersifat <span class="font-black">EKSKLUSIF & UNIK</span>.</p>
-                <p class="mb-05 pl-1" style="border-left: 4px solid var(--accent1); padding-left: 0.5rem;">
-                    Hanya <span class="font-black" style="text-decoration: underline;">1 PLAYER</span> yang bisa memiliki 1 ID karakter LIMITED. Jika sudah ada yang punya, waifu tersebut <span class="font-black">TIDAK AKAN</span> bisa didapat lagi oleh orang lain!
-                </p>
+        <div class="card p-1 mt-4" style="border-style: dashed;">
+            <h3 class="text-sm font-black mb-1"><i class="fa-solid fa-circle-info color-primary"></i> ATURAN GACHA</h3>
+            <div class="text-xs font-bold opacity-08">
+                <p class="mb-05">• Tier C s/d UR bisa dimiliki banyak orang.</p>
+                <p class="mb-05 color-danger">• Tier LIMITED bersifat EKSKLUSIF & UNIK.</p>
+                <p class="text-muted">Hanya 1 PLAYER yang bisa memiliki 1 ID karakter LIMITED. Jika sudah ada yang punya, waifu tersebut tidak akan bisa didapat lagi!</p>
             </div>
         </div>
     </div>
@@ -44,7 +41,7 @@ include BASE_PATH . '/views/partials/header.php';
                 
                 rollBtn.disabled = true;
                 const originalText = rollBtn.innerHTML;
-                resultDiv.innerHTML = '<h3><i class="fa-solid fa-spinner fa-spin"></i> LAGI GACHA...</h3>';
+                resultDiv.innerHTML = '<h3 class="text-sm"><i class="fa-solid fa-spinner fa-spin"></i> LAGI GACHA...</h3>';
 
                 try {
                     const res = await fetch("index.php?url=gacha/executeRoll", {
@@ -67,7 +64,7 @@ include BASE_PATH . '/views/partials/header.php';
                         if (['SSR', 'UR', 'LIMITED'].includes(data.waifu.tier)) {
                             const count = data.waifu.tier === 'LIMITED' ? 50 : (data.waifu.tier === 'UR' ? 35 : 20);
                             const icon = data.waifu.tier === 'LIMITED' ? 'fa-crown' : (data.waifu.tier === 'UR' ? 'fa-bolt' : 'fa-star');
-                            const color = data.waifu.tier === 'UR' ? '#e74c3c' : '#f1c40f';
+                            const color = data.waifu.tier === 'UR' ? '#ff6b6b' : '#fcc419';
                             
                             for (let i = 0; i < count; i++) {
                                 const p = document.createElement("i");
@@ -78,7 +75,6 @@ include BASE_PATH . '/views/partials/header.php';
                                 p.style.top = "50vh";
                                 p.style.zIndex = "10000";
                                 p.style.pointerEvents = "none";
-                                p.style.textShadow = "0 0 10px rgba(0,0,0,0.5)";
                                 document.body.appendChild(p);
 
                                 const angle = Math.random() * Math.PI * 2;
@@ -97,23 +93,23 @@ include BASE_PATH . '/views/partials/header.php';
                         }
 
                         resultDiv.innerHTML = `
-                        <h2 style="color: var(--accent2);" class="gacha-reveal ${data.waifu.tier === 'LIMITED' ? 'limited-text-anim' : ''}">${data.message}</h2>
-                        <div class="card gacha-reveal ${cardClass}" style="background: var(--white); color: var(--black); padding: 1rem; margin-top: 1rem;">
-                            <img src="${data.waifu.image_url}" class="waifu-img" style="border-width: 5px;">
-                            <h3 style="text-shadow: none; color: black; margin-top: 1rem;">${data.waifu.name}</h3>
-                            <span style="font-weight: 900; background: var(--accent1); color: white; padding: 4px 10px; border: 2px solid black;">TIER ${data.waifu.tier}</span>
-                        </div>
-                    `;
+                            <h2 class="text-sm font-black color-primary mb-1">${data.message}</h2>
+                            <div class="waifu-card-mini ${cardClass}" style="margin: 0 auto; max-width: 200px;">
+                                <div class="tier-badge tier-${data.waifu.tier.toLowerCase()}">${data.waifu.tier}</div>
+                                <img src="${data.waifu.image_url}" class="waifu-img">
+                                <h3 class="text-sm font-black">${data.waifu.name}</h3>
+                            </div>
+                        `;
                         // Update dice count
                         diceCountSpan.innerText = parseInt(diceCountSpan.innerText) - 1;
                     } else {
-                        resultDiv.innerHTML = `<div class="error-text">${data.error}</div>`;
+                        resultDiv.innerHTML = `<div class="card p-1 color-danger text-sm font-black">${data.error}</div>`;
                     }
                 } catch (e) {
-                    resultDiv.innerHTML = `<div class="error-text">ERROR JARINGAN!</div>`;
+                    resultDiv.innerHTML = `<div class="card p-1 color-danger text-sm font-black">ERROR JARINGAN!</div>`;
                 }
 
-                // Cooldown logic (3 seconds)
+                // Cooldown logic
                 let cooldown = 3;
                 const timer = setInterval(() => {
                     cooldown--;
@@ -122,12 +118,11 @@ include BASE_PATH . '/views/partials/header.php';
                         rollBtn.disabled = false;
                         rollBtn.innerHTML = originalText;
                     } else {
-                        rollBtn.innerHTML = `<i class="fa-solid fa-clock"></i> TUNGGU (${cooldown}s)`;
+                        rollBtn.innerHTML = `<i class="fa-solid fa-clock"></i> (${cooldown}s)`;
                     }
                 }, 1000);
-                rollBtn.innerHTML = `<i class="fa-solid fa-clock"></i> TUNGGU (${cooldown}s)`;
+                rollBtn.innerHTML = `<i class="fa-solid fa-clock"></i> (${cooldown}s)`;
             }
-
         });
     </script>
     

@@ -1,35 +1,35 @@
-<h1>KELOLA WAIFU</h1>
+<h2 class="mb-2">KELOLA WAIFU</h2>
 
 <!-- Messages -->
 <?php include BASE_PATH . '/views/partials/messages.php'; ?>
 
 <!-- Fetch & Add Section -->
-<div class="result-box" style="text-align: left;">
-    <h2><i class="fa-solid fa-search"></i> CARI WAIFU (BY NAME)</h2>
-    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-        <input type="text" id="search_query" placeholder="Ketik nama waifu (e.g. Mikasa, Rem...)" style="margin-bottom: 0; flex: 1;">
-        <button onclick="searchWaifu()" class="btn" style="margin-bottom: 0; width: auto;">CARI</button>
+<div class="card p-2 mb-2">
+    <h3 class="text-sm font-black mb-1"><i class="fa-solid fa-search color-primary"></i> CARI WAIFU (JIKAN API)</h3>
+    <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+        <input type="text" id="search_query" placeholder="Ketik nama waifu..." class="mb-0">
+        <button onclick="searchWaifu()" class="btn w-auto mb-0" style="padding: 0 1.5rem;">CARI</button>
     </div>
-    <div id="search_results" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 1rem; margin-top: 1rem;">
+    <div id="search_results" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; margin-top: 1rem;">
         <!-- Search results will appear here -->
     </div>
 </div>
 
-<div class="result-box" style="text-align: left;">
-    <h2><i class="fa-solid fa-plus-circle"></i> TAMBAH MANUAL / FETCH BY ID</h2>
-    <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-        <input type="number" id="jikan_id_input" placeholder="JIKAN ID (MAL ID)" style="margin-bottom: 0; flex: 1;">
-        <button onclick="fetchWaifu()" class="btn" style="margin-bottom: 0; width: auto;">FETCH</button>
+<div class="card p-2 mb-2">
+    <h3 class="text-sm font-black mb-1"><i class="fa-solid fa-plus-circle color-primary"></i> FETCH BY ID / TAMBAH</h3>
+    <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
+        <input type="number" id="jikan_id_input" placeholder="MAL ID" class="mb-0">
+        <button onclick="fetchWaifu()" class="btn w-auto mb-0" style="padding: 0 1.5rem;">FETCH</button>
     </div>
     
     <form action="index.php?url=admin/addWaifu" method="POST" id="add_waifu_form" style="display: none;">
         <input type="hidden" name="jikan_id" id="form_jikan_id">
-        <div style="display: flex; gap: 1rem;">
+        <div class="flex gap-1 mb-1" style="align-items: flex-start;">
             <div style="flex: 1;">
-                <label>NAMA WAIFU</label>
+                <label class="text-xs font-black">NAMA WAIFU</label>
                 <input type="text" name="name" id="form_name" required>
-                <label>TIER</label>
-                <select name="tier" class="btn" style="background: var(--white); color: var(--black); text-align: left; text-transform: none;">
+                <label class="text-xs font-black">TIER</label>
+                <select name="tier">
                     <option value="C">C</option>
                     <option value="B">B</option>
                     <option value="A">A</option>
@@ -41,24 +41,24 @@
                     <option value="LIMITED">LIMITED (1 UNIQUE)</option>
                 </select>
             </div>
-            <div style="width: 150px;">
-                <img id="preview_img" src="" class="waifu-img" style="margin-top: 0; display: none; border-width: 3px;">
+            <div style="width: 100px;">
+                <img id="preview_img" src="" class="waifu-img" style="display: none;">
                 <input type="hidden" name="image_url" id="form_image_url">
             </div>
         </div>
-        <button type="submit" class="btn">SIMPAN WAIFU BARU</button>
+        <button type="submit" class="btn w-full mb-0">SIMPAN WAIFU BARU</button>
     </form>
 </div>
 
 <!-- Edit Form (Hidden by default) -->
-<div id="edit_section" class="result-box" style="display: none; text-align: left; border-color: var(--accent2);">
-    <h2 style="color: var(--accent2);"><i class="fa-solid fa-edit"></i> EDIT WAIFU</h2>
+<div id="edit_section" class="card p-2 mb-2" style="display: none; border-color: var(--primary-blue);">
+    <h3 class="text-sm font-black mb-1 color-primary"><i class="fa-solid fa-edit"></i> EDIT WAIFU</h3>
     <form action="index.php?url=admin/updateWaifu" method="POST">
         <input type="hidden" name="id" id="edit_id">
-        <label>NAMA WAIFU</label>
+        <label class="text-xs font-black">NAMA WAIFU</label>
         <input type="text" name="name" id="edit_name" required>
-        <label>TIER</label>
-        <select name="tier" id="edit_tier" class="btn" style="background: var(--white); color: var(--black); text-align: left; text-transform: none;">
+        <label class="text-xs font-black">TIER</label>
+        <select name="tier" id="edit_tier">
             <option value="C">C</option>
             <option value="B">B</option>
             <option value="A">A</option>
@@ -69,96 +69,89 @@
             <option value="UR">UR</option>
             <option value="LIMITED">LIMITED (1 UNIQUE)</option>
         </select>
-        <div style="display: flex; gap: 1rem;">
-            <button type="submit" class="btn" style="flex: 1;">UPDATE DATA</button>
-            <button type="button" onclick="cancelEdit()" class="btn btn-secondary" style="width: auto;">BATAL</button>
+        <div class="flex gap-05">
+            <button type="submit" class="btn" style="flex: 2;">UPDATE DATA</button>
+            <button type="button" onclick="cancelEdit()" class="btn btn-secondary w-auto" style="flex: 1;">BATAL</button>
         </div>
     </form>
 </div>
 
 <!-- List Section -->
-<div class="result-box" style="text-align: left;">
-    <h2><i class="fa-solid fa-filter"></i> FILTER & SORT</h2>
-    <form action="index.php" method="GET" style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end;">
+<div class="card p-2 mb-2">
+    <h3 class="text-sm font-black mb-1"><i class="fa-solid fa-filter color-primary"></i> FILTER & SORT</h3>
+    <form action="index.php" method="GET" style="display: flex; flex-direction: column; gap: 0.8rem;">
         <input type="hidden" name="url" value="admin/waifus">
         
-        <div style="flex: 1; min-width: 200px;">
-            <label>CARI NAMA</label>
-            <input type="text" name="search" value="<?php echo htmlspecialchars($filters['search']); ?>" placeholder="Cari di database..." style="margin-bottom: 0;">
+        <div>
+            <label class="text-xs font-black">CARI NAMA</label>
+            <input type="text" name="search" value="<?php echo htmlspecialchars($filters['search']); ?>" placeholder="..." class="mb-0">
         </div>
 
-        <div style="width: 120px;">
-            <label>TIER</label>
-            <select name="tier" class="btn" style="margin-bottom: 0; background: var(--white); color: var(--black); text-align: left; text-transform: none; padding: 0.8rem;">
-                <option value="">SEMUA</option>
-                <option value="C" <?php echo $filters['tier'] == 'C' ? 'selected' : ''; ?>>C</option>
-                <option value="B" <?php echo $filters['tier'] == 'B' ? 'selected' : ''; ?>>B</option>
-                <option value="A" <?php echo $filters['tier'] == 'A' ? 'selected' : ''; ?>>A</option>
-                <option value="R" <?php echo $filters['tier'] == 'R' ? 'selected' : ''; ?>>R</option>
-                <option value="S" <?php echo $filters['tier'] == 'S' ? 'selected' : ''; ?>>S</option>
-                <option value="SR" <?php echo $filters['tier'] == 'SR' ? 'selected' : ''; ?>>SR</option>
-                <option value="SSR" <?php echo $filters['tier'] == 'SSR' ? 'selected' : ''; ?>>SSR</option>
-                <option value="UR" <?php echo $filters['tier'] == 'UR' ? 'selected' : ''; ?>>UR</option>
-                <option value="LIMITED" <?php echo $filters['tier'] == 'LIMITED' ? 'selected' : ''; ?>>LIMITED</option>
-            </select>
+        <div class="flex gap-05">
+            <div style="flex: 1;">
+                <label class="text-xs font-black">TIER</label>
+                <select name="tier" class="mb-0">
+                    <option value="">SEMUA</option>
+                    <option value="C" <?php echo $filters['tier'] == 'C' ? 'selected' : ''; ?>>C</option>
+                    <option value="B" <?php echo $filters['tier'] == 'B' ? 'selected' : ''; ?>>B</option>
+                    <option value="A" <?php echo $filters['tier'] == 'A' ? 'selected' : ''; ?>>A</option>
+                    <option value="R" <?php echo $filters['tier'] == 'R' ? 'selected' : ''; ?>>R</option>
+                    <option value="S" <?php echo $filters['tier'] == 'S' ? 'selected' : ''; ?>>S</option>
+                    <option value="SR" <?php echo $filters['tier'] == 'SR' ? 'selected' : ''; ?>>SR</option>
+                    <option value="SSR" <?php echo $filters['tier'] == 'SSR' ? 'selected' : ''; ?>>SSR</option>
+                    <option value="UR" <?php echo $filters['tier'] == 'UR' ? 'selected' : ''; ?>>UR</option>
+                    <option value="LIMITED" <?php echo $filters['tier'] == 'LIMITED' ? 'selected' : ''; ?>>LIMITED</option>
+                </select>
+            </div>
+
+            <div style="flex: 1;">
+                <label class="text-xs font-black">URUTKAN</label>
+                <select name="sort" class="mb-0">
+                    <option value="id" <?php echo $filters['sort'] == 'id' ? 'selected' : ''; ?>>TERBARU</option>
+                    <option value="name" <?php echo $filters['sort'] == 'name' ? 'selected' : ''; ?>>NAMA</option>
+                    <option value="tier" <?php echo $filters['sort'] == 'tier' ? 'selected' : ''; ?>>TIER</option>
+                </select>
+            </div>
         </div>
 
-        <div style="width: 150px;">
-            <label>URUTKAN</label>
-            <select name="sort" class="btn" style="margin-bottom: 0; background: var(--white); color: var(--black); text-align: left; text-transform: none; padding: 0.8rem;">
-                <option value="id" <?php echo $filters['sort'] == 'id' ? 'selected' : ''; ?>>TERBARU</option>
-                <option value="name" <?php echo $filters['sort'] == 'name' ? 'selected' : ''; ?>>NAMA</option>
-                <option value="tier" <?php echo $filters['sort'] == 'tier' ? 'selected' : ''; ?>>TIER</option>
-            </select>
+        <div class="flex gap-05">
+            <button type="submit" class="btn mb-0" style="flex: 2;">GAS FILTER</button>
+            <a href="index.php?url=admin/waifus" class="btn btn-secondary mb-0" style="flex: 1; padding: 0.6rem;"><i class="fa-solid fa-rotate-left"></i></a>
         </div>
-
-        <div style="width: 120px;">
-            <label>ORDER</label>
-            <select name="order" class="btn" style="margin-bottom: 0; background: var(--white); color: var(--black); text-align: left; text-transform: none; padding: 0.8rem;">
-                <option value="DESC" <?php echo $filters['order'] == 'DESC' ? 'selected' : ''; ?>>DESC</option>
-                <option value="ASC" <?php echo $filters['order'] == 'ASC' ? 'selected' : ''; ?>>ASC</option>
-            </select>
-        </div>
-
-        <button type="submit" class="btn" style="margin-bottom: 0; width: auto; padding: 0.8rem 1.5rem;">GAS FILTER</button>
-        <a href="index.php?url=admin/waifus" class="btn btn-secondary" style="margin-bottom: 0; width: auto; padding: 0.8rem 1.5rem;">RESET</a>
     </form>
 </div>
 
-<div class="result-box">
-    <h2><i class="fa-solid fa-list"></i> POOL WAIFU SAAT INI</h2>
+<div class="card p-1">
+    <h3 class="text-sm font-black mb-1 px-1 pt-1"><i class="fa-solid fa-list color-primary"></i> POOL WAIFU</h3>
     <div style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+        <table class="ranking-table">
             <thead>
-                <tr style="border-bottom: 4px solid var(--black);">
-                    <th style="padding: 1rem;">FOTO</th>
-                    <th style="padding: 1rem;">NAMA</th>
-                    <th style="padding: 1rem;">TIER</th>
-                    <th style="padding: 1rem;">AKSI</th>
+                <tr>
+                    <th>FOTO</th>
+                    <th>NAMA & MAL ID</th>
+                    <th>TIER</th>
+                    <th>AKSI</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($waifus as $w): ?>
-                <tr style="border-bottom: 2px solid var(--black);">
+                <tr>
                     <td style="padding: 0.5rem;">
-                        <div style="position: relative; display: inline-block;">
-                            <div style="position: absolute; top: 5px; left: 5px; width: 100%; height: 100%; background: var(--black); z-index: 0;"></div>
-                            <img src="<?php echo $w['image_url']; ?>" style="position: relative; width: 60px; border: 3px solid var(--black); z-index: 1; display: block;">
-                        </div>
+                        <img src="<?php echo $w['image_url']; ?>" style="width: 50px; height: 50px; border-radius: 8px; border: 1px solid var(--text-dark); object-fit: cover;">
                     </td>
-                    <td style="padding: 0.5rem; font-weight: 900; text-transform: uppercase;">
-                        <?php echo htmlspecialchars($w['name']); ?>
-                        <div style="font-size: 0.7rem; opacity: 0.6;">MAL ID: <?php echo $w['jikan_id']; ?></div>
+                    <td>
+                        <div class="text-sm font-black"><?php echo htmlspecialchars($w['name']); ?></div>
+                        <div class="text-xs text-muted">ID: <?php echo $w['jikan_id']; ?></div>
                     </td>
-                    <td style="padding: 0.5rem;">
-                        <span class="tier-badge tier-<?php echo strtolower($w['tier']); ?>">
+                    <td>
+                        <span class="tier-badge tier-<?php echo strtolower($w['tier']); ?>" style="position: static;">
                             <?php echo $w['tier']; ?>
                         </span>
                     </td>
-                    <td style="padding: 0.5rem;">
-                        <div style="display: flex; gap: 0.5rem;">
-                            <button onclick="editWaifu(<?php echo htmlspecialchars(json_encode($w)); ?>)" class="btn" style="padding: 0.5rem; font-size: 0.8rem; margin-bottom: 0; background: var(--secondary);"><i class="fa-solid fa-pen"></i></button>
-                            <a href="index.php?url=admin/deleteWaifu&id=<?php echo $w['id']; ?>" onclick="return confirm('Hapus waifu ini?')" class="btn" style="padding: 0.5rem; font-size: 0.8rem; margin-bottom: 0; background: var(--accent2);"><i class="fa-solid fa-trash"></i></a>
+                    <td>
+                        <div class="flex gap-05">
+                            <button onclick="editWaifu(<?php echo htmlspecialchars(json_encode($w)); ?>)" class="btn btn-secondary mb-0" style="padding: 0.4rem; font-size: 0.8rem; flex: 1;"><i class="fa-solid fa-pen"></i></button>
+                            <a href="index.php?url=admin/deleteWaifu&id=<?php echo $w['id']; ?>" onclick="return confirm('Hapus waifu ini?')" class="btn btn-danger mb-0" style="padding: 0.4rem; font-size: 0.8rem; flex: 1;"><i class="fa-solid fa-trash"></i></a>
                         </div>
                     </td>
                 </tr>
@@ -168,7 +161,7 @@
     </div>
 
     <!-- Pagination -->
-    <div class="flex-center mt-2 gap-1" style="flex-wrap: wrap;">
+    <div class="flex-center mt-2 mb-1 gap-05">
         <?php if ($pagination['total_pages'] > 1): ?>
             <?php 
                 $queryParams = $_GET; 
@@ -177,17 +170,16 @@
 
             <?php if ($pagination['current_page'] > 1): ?>
                 <?php $queryParams['page'] = $pagination['current_page'] - 1; ?>
-                <a href="index.php?url=admin/waifus&<?php echo http_build_query($queryParams); ?>" class="btn btn-secondary w-auto" style="padding: 0.5rem 1rem; margin-bottom: 0;">PREV</a>
+                <a href="index.php?url=admin/waifus&<?php echo http_build_query($queryParams); ?>" class="btn btn-secondary w-auto mb-0" style="padding: 0.4rem 0.8rem;">PREV</a>
             <?php endif; ?>
 
-            <div class="result-box mb-0" style="padding: 0.5rem 1rem; min-height: auto; border-width: 2px;">
-                <span class="font-bold">PAGE <?php echo $pagination['current_page']; ?> / <?php echo $pagination['total_pages']; ?></span>
-                <div style="font-size: 0.7rem; opacity: 0.6;">TOTAL: <?php echo $pagination['total_items']; ?></div>
+            <div class="text-xs font-black">
+                PAGE <?php echo $pagination['current_page']; ?> / <?php echo $pagination['total_pages']; ?>
             </div>
 
             <?php if ($pagination['current_page'] < $pagination['total_pages']): ?>
                 <?php $queryParams['page'] = $pagination['current_page'] + 1; ?>
-                <a href="index.php?url=admin/waifus&<?php echo http_build_query($queryParams); ?>" class="btn btn-secondary w-auto" style="padding: 0.5rem 1rem; margin-bottom: 0;">NEXT</a>
+                <a href="index.php?url=admin/waifus&<?php echo http_build_query($queryParams); ?>" class="btn btn-secondary w-auto mb-0" style="padding: 0.4rem 0.8rem;">NEXT</a>
             <?php endif; ?>
         <?php endif; ?>
     </div>
@@ -209,7 +201,7 @@ function searchWaifu() {
     const resultsDiv = document.getElementById('search_results');
     if (!query) return;
     
-    resultsDiv.innerHTML = '<p>Mencari...</p>';
+    resultsDiv.innerHTML = '<p class="text-xs">Mencari...</p>';
     
     fetch(`index.php?url=admin/searchWaifu&query=${encodeURIComponent(query)}`)
         .then(res => res.json())
@@ -218,15 +210,12 @@ function searchWaifu() {
             if (data && data.length > 0) {
                 data.forEach(item => {
                     const div = document.createElement('div');
-                    div.className = 'card';
-                    div.style.background = 'var(--white)';
-                    div.style.color = 'var(--black)';
-                    div.style.padding = '0.5rem';
+                    div.className = 'waifu-card-mini';
+                    div.style.padding = '0.4rem';
                     div.style.cursor = 'pointer';
                     div.innerHTML = `
-                        <img src="${item.images.jpg.image_url}" style="width: 100%; border: 2px solid black;">
-                        <div style="font-size: 0.8rem; font-weight: 900; margin-top: 0.3rem;">${item.name}</div>
-                        <div style="font-size: 0.7rem; opacity: 0.6;">ID: ${item.mal_id}</div>
+                        <img src="${item.images.jpg.image_url}" class="waifu-img" style="margin-bottom: 4px;">
+                        <div class="text-xs font-black" style="font-size: 0.6rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.name}</div>
                     `;
                     div.onclick = () => {
                         document.getElementById('jikan_id_input').value = item.mal_id;
@@ -236,10 +225,10 @@ function searchWaifu() {
                     resultsDiv.appendChild(div);
                 });
             } else {
-                resultsDiv.innerHTML = '<p>Tidak ada hasil.</p>';
+                resultsDiv.innerHTML = '<p class="text-xs">Tidak ada hasil.</p>';
             }
         })
-        .catch(err => resultsDiv.innerHTML = '<p>Error searching!</p>');
+        .catch(err => resultsDiv.innerHTML = '<p class="text-xs">Error searching!</p>');
 }
 
 function fetchWaifu() {

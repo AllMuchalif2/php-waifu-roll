@@ -6,6 +6,7 @@
     <title><?php echo $title ?? 'Waifu Gacha'; ?></title>
     <link rel="icon" href="/assets/img/logo.png" type="image/png">
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>

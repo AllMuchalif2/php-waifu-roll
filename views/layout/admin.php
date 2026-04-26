@@ -6,22 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MYBINI PANEL - Admin Panel</title>
     <link rel="icon" href="/assets/img/logo.png" type="image/png">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @media (max-width: 767px) {
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+                display: block;
+            }
+            .sidebar-nav {
+                display: flex;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+            .sidebar-nav li {
+                flex: 1;
+                min-width: 120px;
+            }
+            .sidebar-nav a {
+                margin-bottom: 0;
+                padding: 0.8rem;
+                font-size: 0.7rem;
+            }
+            .main-content {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 
-<body>
+<body style="padding-bottom: 0;">
     <div class="admin-layout">
-        <aside class="sidebar">
-            <div class="sidebar-brand" style="display: flex; align-items: center; gap: 10px; justify-content: center;">
-                <!-- <img src="/assets/img/logo.png" style="height: 30px;"> -->
-                MYBINI PANEL
+        <aside class="sidebar" style="display: flex; flex-direction: column; gap: 1.5rem;">
+            <div class="sidebar-brand" style="display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 800; font-size: 1.2rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: 12px;">
+                <i class="fa-solid fa-screwdriver-wrench"></i> 
+                <span>MYBINI PANEL</span>
             </div>
-            <ul class="sidebar-nav">
-                <li><a href="index.php?url=admin/index"><i class="fa-solid fa-house"></i> DASHBOARD</a></li>
-                <li><a href="index.php?url=admin/waifus"><i class="fa-solid fa-heart"></i> KELOLA WAIFU</a></li>
-                <li><a href="index.php?url=auth/logout" style="background: var(--accent2);"><i
-                            class="fa-solid fa-right-from-bracket"></i> LOGOUT</a></li>
+            <ul class="sidebar-nav" style="list-style: none; display: flex; flex-direction: column; gap: 0.8rem;">
+                <li>
+                    <a href="index.php?url=admin/index" class="btn <?php echo !isset($_GET['url']) || $_GET['url'] == 'admin/index' ? '' : 'btn-secondary'; ?> mb-0" style="text-align: left; justify-content: flex-start; width: 100%;">
+                        <i class="fa-solid fa-house" style="width: 20px;"></i> DASHBOARD
+                    </a>
+                </li>
+                <li>
+                    <a href="index.php?url=admin/waifus" class="btn <?php echo isset($_GET['url']) && $_GET['url'] == 'admin/waifus' ? '' : 'btn-secondary'; ?> mb-0" style="text-align: left; justify-content: flex-start; width: 100%;">
+                        <i class="fa-solid fa-heart" style="width: 20px;"></i> KELOLA WAIFU
+                    </a>
+                </li>
+                <li style="margin-top: auto; padding-top: 2rem;">
+                    <a href="index.php?url=auth/logout" class="btn btn-danger mb-0" style="text-align: left; justify-content: flex-start; width: 100%;">
+                        <i class="fa-solid fa-right-from-bracket" style="width: 20px;"></i> LOGOUT
+                    </a>
+                </li>
             </ul>
         </aside>
 

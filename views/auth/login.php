@@ -4,30 +4,33 @@ include BASE_PATH . '/views/partials/header.php';
 ?>
 
 <body>
-    <div class="auth-wrapper">
-        <div class="result-box auth-card">
-            <h2 class="auth-title">MASUK KE MYBINI</h2>
+    <div class="container" style="display: flex; align-items: center; justify-content: center; min-height: 100vh; flex-direction: column;">
+        <div class="card w-full">
+            <div class="text-center mb-2">
+                <img src="/assets/img/logo.png" style="height: 60px; margin-bottom: 1rem;">
+                <h2 style="font-size: 1.5rem;">MASUK MYBINI</h2>
+                <p class="text-sm text-muted">Ayo lanjut gacha waifumu!</p>
+            </div>
             
             <?php include BASE_PATH . '/views/partials/messages.php'; ?>
 
             <form action="index.php?url=auth/login" method="POST">
-                <div class="mb-15">
-                    <label class="form-label d-block font-black mb-05 text-uppercase">Username</label>
-                    <input type="text" name="username" required placeholder="Masukkan username...">
+                <div style="margin-bottom: 1rem;">
+                    <label class="text-xs font-black mb-05 d-block">USERNAME</label>
+                    <input type="text" name="username" required placeholder="...">
                 </div>
-                <div class="mb-2">
-                    <label class="form-label d-block font-black mb-05 text-uppercase">Password</label>
+                <div style="margin-bottom: 1.5rem;">
+                    <label class="text-xs font-black mb-05 d-block">PASSWORD</label>
                     <input type="password" name="password" required placeholder="********">
                 </div>
-                <button type="submit" class="btn">MASUK SEKARANG!</button>
+                <button type="submit" class="btn">MASUK SEKARANG</button>
             </form>
             
-            <p class="text-center mt-1 font-bold">
-                Belum punya akun? <a href="index.php?url=auth/register" class="tier-accent2-text font-bold">DAFTAR SINI</a>
+            <p class="text-center mt-1 text-sm font-bold">
+                Belum punya akun? <a href="index.php?url=auth/register" class="color-primary">DAFTAR</a>
             </p>
-            <hr class="auth-hr">
-            <a href="/index.php" class="btn btn-secondary"><i class="fa-solid fa-house"></i> KEMBALI KE BERANDA</a>
         </div>
+        <a href="/index.php" class="btn btn-secondary w-auto px-3"><i class="fa-solid fa-house"></i> BERANDA</a>
     </div>
 </body>
 </html>
