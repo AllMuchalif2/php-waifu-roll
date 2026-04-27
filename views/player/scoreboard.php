@@ -1,6 +1,6 @@
-<?php 
+<?php
 $title = "Scoreboard - Waifu Gacha";
-include BASE_PATH . '/views/partials/header.php'; 
+include BASE_PATH . '/views/partials/header.php';
 ?>
 
 <body class="pb-80">
@@ -8,9 +8,9 @@ include BASE_PATH . '/views/partials/header.php';
 
     <div class="container">
         <h2 class="text-center mt-1 mb-2">RANKING TOP</h2>
-        
+
         <div class="card p-0" style="overflow: hidden;">
-            <table class="ranking-table">
+            <table class="ranking-table w-full">
                 <thead>
                     <tr>
                         <th style="width: 50px;">#</th>
@@ -21,15 +21,17 @@ include BASE_PATH . '/views/partials/header.php';
                 </thead>
                 <tbody>
                     <?php foreach ($rankings as $i => $r): ?>
-                    <tr style="<?php echo ($i < 3) ? 'background: rgba(61, 90, 254, 0.05);' : ''; ?>">
-                        <td class="font-black text-center" style="<?php echo ($i == 0) ? 'color: #fcc419;' : (($i == 1) ? 'color: #adb5bd;' : (($i == 2) ? 'color: #e67e22;' : '')); ?>">
-                            <?php if ($i < 3): ?><i class="fa-solid fa-crown"></i> <?php endif; ?>
-                            <?php echo $i + 1; ?>
-                        </td>
-                        <td class="text-sm font-bold"><?php echo htmlspecialchars($r['username']); ?></td>
-                        <td class="text-center text-sm"><i class="fa-solid fa-heart color-primary"></i> <?php echo $r['waifu_count']; ?></td>
-                        <td class="text-right text-sm font-bold color-danger"><?php echo $r['coins']; ?></td>
-                    </tr>
+                        <tr style="<?php echo ($i < 3) ? 'background: rgba(61, 90, 254, 0.05);' : ''; ?>">
+                            <td class="font-black text-center"
+                                style="<?php echo ($i == 0) ? 'color: #fcc419;' : (($i == 1) ? 'color: #adb5bd;' : (($i == 2) ? 'color: #e67e22;' : '')); ?>">
+                                <?php if ($i < 3): ?><i class="fa-solid fa-crown"></i> <?php endif; ?>
+                                <?php echo $i + 1; ?>
+                            </td>
+                            <td class="text-sm font-bold"><?php echo htmlspecialchars($r['username']); ?></td>
+                            <td class="text-center text-sm"><i class="fa-solid fa-heart color-primary"></i>
+                                <?php echo $r['waifu_count']; ?></td>
+                            <td class="text-right text-sm font-bold color-danger"><?php echo $r['coins']; ?></td>
+                        </tr>
                     <?php endforeach; ?>
                 </tbody>
             </table>

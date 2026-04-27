@@ -5,14 +5,17 @@ namespace App\Controllers;
 use App\Core\Controller;
 use App\Core\Database;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = Database::getInstance()->getConnection();
     }
 
-    public function index() {
+    public function index()
+    {
         // Fetch Top Waifus with Owner Name for LIMITED
         $stmt = $this->db->query("
             SELECT w.*, 
@@ -20,12 +23,15 @@ class HomeController extends Controller {
             FROM waifu_pool w 
             ORDER BY CASE w.tier 
                 WHEN 'LIMITED' THEN 1 
-                WHEN 'SSR' THEN 2 
-                WHEN 'SR' THEN 3 
-                WHEN 'A' THEN 4 
-                WHEN 'B' THEN 5 
-                WHEN 'C' THEN 6 
-                ELSE 7 END ASC, 
+                WHEN 'UR' THEN 2
+                WHEN 'SSR' THEN 3 
+                WHEN 'SR' THEN 4
+                WHEN 'S' THEN 5 
+                WHEN 'R' THEN 6
+                WHEN 'A' THEN 7 
+                WHEN 'B' THEN 8 
+                WHEN 'C' THEN 9 
+                ELSE 10 END ASC, 
             w.id DESC 
             LIMIT 6
         ");

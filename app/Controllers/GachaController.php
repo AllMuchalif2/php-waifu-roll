@@ -87,7 +87,7 @@ class GachaController extends Controller
         }
 
         $currentTime = time();
-        if ($user['last_roll_timestamp'] && ($currentTime - $user['last_roll_timestamp']) < 3) {
+        if ($user['last_roll_timestamp'] && ($currentTime - $user['last_roll_timestamp']) < 2) {
             header('Content-Type: application/json', true, 429);
             echo json_encode(['error' => 'Terlalu banyak permintaan, tunggu sejenak']);
             exit;
@@ -291,7 +291,8 @@ class GachaController extends Controller
                 $this->db->rollBack();
                 $_SESSION['error'] = "Gagal menjual waifu.";
             }
-            $this->redirect('index.php?url=gacha/index');
+            $redirectUrl = $_SERVER['HTTP_REFERER'] ?? 'index.php?url=collection/index';
+            $this->redirect($redirectUrl);
         }
     }
 }

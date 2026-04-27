@@ -48,8 +48,11 @@ class Admin {
             'C' => $tierStats['C'] ?? 0,
             'B' => $tierStats['B'] ?? 0,
             'A' => $tierStats['A'] ?? 0,
+            'R' => $tierStats['R'] ?? 0,
+            'S' => $tierStats['S'] ?? 0,
             'SR' => $tierStats['SR'] ?? 0,
             'SSR' => $tierStats['SSR'] ?? 0,
+            'UR' => $tierStats['UR'] ?? 0,
             'LIMITED' => $tierStats['LIMITED'] ?? 0,
         ];
         

@@ -42,7 +42,7 @@ include BASE_PATH . '/views/partials/header.php';
         <section class="mb-4">
             <h2 class="text-sm font-black color-primary mb-1"><i class="fa-solid fa-trophy"></i> TOP PLAYERS</h2>
             <div class="card p-1">
-                <table class="ranking-table">
+                <table class="ranking-table w-full">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -55,8 +55,14 @@ include BASE_PATH . '/views/partials/header.php';
                         <?php foreach ($rankings as $i => $r): ?>
                             <tr>
                                 <td class="font-black"><?php echo $i + 1; ?></td>
-                                <td class="text-sm font-bold"><?php echo htmlspecialchars($r['username']); ?></td>
-                                <td class="text-sm"><i class="fa-solid fa-heart color-primary"></i> <?php echo $r['waifu_count']; ?></td>
+                                <td class="text-sm font-bold">
+                                    <?php
+                                    $nama = htmlspecialchars($r['username']);
+                                    echo wordwrap($nama, 10, "<br>", true);
+                                    ?>
+                                </td>
+                                <td class="text-sm"><i class="fa-solid fa-heart color-primary"></i>
+                                    <?php echo $r['waifu_count']; ?></td>
                                 <td class="text-sm font-bold color-danger"><?php echo $r['coins']; ?></td>
                             </tr>
                         <?php endforeach; ?>
@@ -75,9 +81,11 @@ include BASE_PATH . '/views/partials/header.php';
 
         <!-- Suggestion Card -->
         <section class="card text-center" style="border-style: dashed; background: rgba(255, 234, 0, 0.1);">
-            <h3 class="text-sm font-black mb-05"><i class="fa-solid fa-lightbulb color-primary"></i> SARAN WAIFU BARU?</h3>
+            <h3 class="text-sm font-black mb-05"><i class="fa-solid fa-lightbulb color-primary"></i> SARAN WAIFU BARU?
+            </h3>
             <p class="text-xs text-muted mb-1">Punya waifu favorit yang belum ada? Kasih tahu kami!</p>
-            <a href="https://forms.gle/uV83B7zRbk98sKDr6" target="_blank" class="btn btn-secondary mb-0 w-auto px-3">ISI FORM SARAN</a>
+            <a href="https://forms.gle/uV83B7zRbk98sKDr6" target="_blank" class="btn btn-secondary mb-0 w-auto px-3">ISI
+                FORM SARAN</a>
         </section>
     </div>
 
