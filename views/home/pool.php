@@ -6,11 +6,11 @@ include BASE_PATH . '/views/partials/header.php';
 <body class="pb-80">
     <?php include BASE_PATH . '/views/partials/navbar.php'; ?>
 
-    <div class="container">
-        <h2 class="text-center mt-1 mb-2"><i class="fa-solid fa-list color-primary"></i> WAIFU POOL</h2>
+    <div class="w-full max-w-md mx-auto p-6">
+        <h2 class="text-center mt-4 mb-8"><i class="fa-solid fa-list text-blue-600"></i> WAIFU POOL</h2>
         
-        <div class="card p-2 mb-2">
-            <h3 class="text-sm font-black mb-1"><i class="fa-solid fa-filter color-primary"></i> FILTER & SORT</h3>
+        <div class="bg-white border-2 border-gray-900 rounded-2xl p-6 mb-6 shadow-sm relative p-8 mb-8">
+            <h3 class="text-sm font-black mb-4"><i class="fa-solid fa-filter text-blue-600"></i> FILTER & SORT</h3>
             <form action="index.php" method="GET" style="display: flex; flex-direction: column; gap: 0.8rem;">
                 <input type="hidden" name="url" value="home/pool">
                 
@@ -19,7 +19,7 @@ include BASE_PATH . '/views/partials/header.php';
                     <input type="text" name="search" value="<?php echo htmlspecialchars($filters['search']); ?>" placeholder="..." class="mb-0">
                 </div>
 
-                <div class="flex gap-05">
+                <div class="flex gap-2">
                     <div style="flex: 1;">
                         <label class="text-xs font-black">TIER</label>
                         <select name="tier" class="mb-0">
@@ -46,34 +46,34 @@ include BASE_PATH . '/views/partials/header.php';
                     </div>
                 </div>
 
-                <div class="flex gap-05">
-                    <button type="submit" class="btn mb-0" style="flex: 2;">GAS FILTER</button>
-                    <a href="index.php?url=home/pool" class="btn btn-secondary mb-0 flex-center" style="flex: 1; padding: 0.6rem;"><i class="fa-solid fa-rotate-left"></i></a>
+                <div class="flex gap-2">
+                    <button type="submit" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm mb-0" style="flex: 2;">GAS FILTER</button>
+                    <a href="index.php?url=home/pool" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm bg-yellow-400 text-gray-900 shadow-[6px_6px_0px_#3d5afe] active:shadow-[3px_3px_0px_#3d5afe] mb-0 flex justify-center items-center" style="flex: 1; padding: 0.6rem;"><i class="fa-solid fa-rotate-left"></i></a>
                 </div>
             </form>
         </div>
 
-        <div class="top-waifus-grid">
+        <div class="grid grid-cols-3 gap-2">
             <?php if (count($waifus) > 0): ?>
                 <?php foreach ($waifus as $w): ?>
-                    <div class="waifu-card-mini">
-                        <div class="tier-badge tier-<?php echo strtolower($w['tier']); ?>">
+                    <div class="p-2 border-2 border-gray-900 rounded-xl bg-white text-center transition-transform hover:-translate-y-1 relative">
+                        <div class="absolute top-2 right-2 px-2 py-1 rounded-md text-[10px] font-black text-white border border-gray-900 z-10 tier-<?php echo strtolower($w['tier']); ?>">
                             <?php echo $w['tier']; ?>
                         </div>
-                        <img src="<?php echo htmlspecialchars($w['image_url']); ?>" class="waifu-img">
+                        <img src="<?php echo htmlspecialchars($w['image_url']); ?>" class="w-full rounded-lg border border-gray-900 aspect-square object-cover mb-2">
                         <div class="text-sm font-black" style="font-size: 0.75rem; line-height: 1.2; height: 1.8rem; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;"><?php echo htmlspecialchars($w['name']); ?></div>
-                        <div class="text-xs text-muted mt-05">ID: <?php echo $w['jikan_id']; ?></div>
+                        <div class="text-xs text-gray-500 mt-05">ID: <?php echo $w['jikan_id']; ?></div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
-                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;" class="card">
-                    <p class="font-bold opacity-06">Tidak ada waifu yang ditemukan.</p>
+                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;" class="bg-white border-2 border-gray-900 rounded-2xl p-6 mb-6 shadow-sm relative">
+                    <p class="font-bold opacity-60">Tidak ada waifu yang ditemukan.</p>
                 </div>
             <?php endif; ?>
         </div>
 
         <!-- Pagination -->
-        <div class="flex-center mt-2 mb-1 gap-05">
+        <div class="flex justify-center items-center mt-8 mb-4 gap-2">
             <?php if ($pagination['total_pages'] > 1): ?>
                 <?php 
                     $queryParams = $_GET; 
@@ -82,7 +82,7 @@ include BASE_PATH . '/views/partials/header.php';
 
                 <?php if ($pagination['current_page'] > 1): ?>
                     <?php $queryParams['page'] = $pagination['current_page'] - 1; ?>
-                    <a href="index.php?url=home/pool&<?php echo http_build_query($queryParams); ?>" class="btn btn-secondary w-auto mb-0" style="padding: 0.4rem 0.8rem;">PREV</a>
+                    <a href="index.php?url=home/pool&<?php echo http_build_query($queryParams); ?>" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm bg-yellow-400 text-gray-900 shadow-[6px_6px_0px_#3d5afe] active:shadow-[3px_3px_0px_#3d5afe] w-auto mb-0" style="padding: 0.4rem 0.8rem;">PREV</a>
                 <?php endif; ?>
 
                 <div class="text-xs font-black">
@@ -91,7 +91,7 @@ include BASE_PATH . '/views/partials/header.php';
 
                 <?php if ($pagination['current_page'] < $pagination['total_pages']): ?>
                     <?php $queryParams['page'] = $pagination['current_page'] + 1; ?>
-                    <a href="index.php?url=home/pool&<?php echo http_build_query($queryParams); ?>" class="btn btn-secondary w-auto mb-0" style="padding: 0.4rem 0.8rem;">NEXT</a>
+                    <a href="index.php?url=home/pool&<?php echo http_build_query($queryParams); ?>" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm bg-yellow-400 text-gray-900 shadow-[6px_6px_0px_#3d5afe] active:shadow-[3px_3px_0px_#3d5afe] w-auto mb-0" style="padding: 0.4rem 0.8rem;">NEXT</a>
                 <?php endif; ?>
             <?php endif; ?>
         </div>

@@ -6,12 +6,12 @@ include BASE_PATH . '/views/partials/header.php';
 <body class="pb-80">
     <?php include BASE_PATH . '/views/partials/navbar.php'; ?>
 
-    <div class="container">
-        <h2 class="text-center mt-1 mb-2">RANKING TOP</h2>
+    <div class="w-full max-w-md mx-auto p-6">
+        <h2 class="text-center mt-4 mb-8">RANKING TOP</h2>
 
-        <div class="flex flex-col gap-1" style="display: flex; flex-direction: column;">
+        <div class="flex flex-col gap-4" style="display: flex; flex-direction: column;">
             <?php foreach ($rankings as $i => $r): ?>
-                <div class="card p-1" style="<?php echo ($i < 3) ? 'background: rgba(61, 90, 254, 0.05); border-color: var(--primary-blue);' : ''; ?> display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0;">
+                <div class="bg-white border-2 border-gray-900 rounded-2xl p-6 mb-6 shadow-sm relative p-4" style="<?php echo ($i < 3) ? 'background: rgba(61, 90, 254, 0.05); border-color: var(--primary-blue);' : ''; ?> display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; margin-bottom: 0;">
                     
                     <div style="display: flex; align-items: center; gap: 1rem; flex: 1;">
                         <!-- Rank -->
@@ -23,25 +23,25 @@ include BASE_PATH . '/views/partials/header.php';
                         <!-- Player Info -->
                         <div>
                             <div class="text-sm font-bold" style="line-height: 1.2;"><?php echo htmlspecialchars($r['username']); ?></div>
-                            <div class="text-xs text-muted mt-05">
-                                <i class="fa-solid fa-heart color-primary"></i> <?php echo $r['waifu_count']; ?> Waifu
+                            <div class="text-xs text-gray-500 mt-05">
+                                <i class="fa-solid fa-heart text-blue-600"></i> <?php echo $r['waifu_count']; ?> Waifu
                             </div>
                         </div>
                     </div>
                     
                     <!-- Coins -->
                     <div class="text-right">
-                        <div class="text-xs font-black opacity-06">COINS</div>
-                        <div class="text-sm font-bold color-danger"><i class="fa-solid fa-coins"></i> <?php echo number_format($r['coins'], 0, ',', '.'); ?></div>
+                        <div class="text-xs font-black opacity-60">COINS</div>
+                        <div class="text-sm font-bold text-red-500"><i class="fa-solid fa-coins"></i> <?php echo number_format($r['coins'], 0, ',', '.'); ?></div>
                     </div>
                 </div>
             <?php endforeach; ?>
         </div>
 
         <?php if (isset($_SESSION['user_id'])): ?>
-            <a href="index.php?url=gacha/index" class="btn mt-2"><i class="fa-solid fa-house"></i> DASHBOARD</a>
+            <a href="index.php?url=gacha/index" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm mt-8"><i class="fa-solid fa-house"></i> DASHBOARD</a>
         <?php else: ?>
-            <a href="/index.php" class="btn btn-secondary mt-2"><i class="fa-solid fa-house"></i> BERANDA</a>
+            <a href="/index.php" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm bg-yellow-400 text-gray-900 shadow-[6px_6px_0px_#3d5afe] active:shadow-[3px_3px_0px_#3d5afe] mt-8"><i class="fa-solid fa-house"></i> BERANDA</a>
         <?php endif; ?>
     </div>
 

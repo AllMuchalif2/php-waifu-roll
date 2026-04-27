@@ -6,23 +6,23 @@ include BASE_PATH . '/views/partials/header.php';
 <body class="pb-80">
     <?php include BASE_PATH . '/views/partials/navbar.php'; ?>
 
-    <div class="container">
-        <div class="card text-center">
+    <div class="w-full max-w-md mx-auto p-6">
+        <div class="bg-white border-2 border-gray-900 rounded-2xl p-6 mb-6 shadow-sm relative text-center">
             <h1 style="font-size: 1.5rem; margin-bottom: 1.5rem;">
-                <i class="fa-solid fa-dice color-primary"></i> DADU: <span id="dice-count"
-                    class="color-danger"><?php echo $user['dice_count']; ?></span>
+                <i class="fa-solid fa-dice text-blue-600"></i> DADU: <span id="dice-count"
+                    class="text-red-500"><?php echo $user['dice_count']; ?></span>
             </h1>
-            <button id="roll-btn" class="btn">GAS GACHA!</button>
+            <button id="roll-btn" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm">GAS GACHA!</button>
             <div id="gacha-result" style="margin-top: 1.5rem;"></div>
         </div>
 
         <!-- Info Tier -->
-        <div class="card p-1 mt-4" style="border-style: dashed;">
-            <h3 class="text-sm font-black mb-1"><i class="fa-solid fa-circle-info color-primary"></i> ATURAN GACHA</h3>
+        <div class="bg-white border-2 border-gray-900 rounded-2xl p-6 mb-6 shadow-sm relative p-4 mt-16" style="border-style: dashed;">
+            <h3 class="text-sm font-black mb-4"><i class="fa-solid fa-circle-info text-blue-600"></i> ATURAN GACHA</h3>
             <div class="text-xs font-bold opacity-08">
                 <p class="mb-05">• Tier C s/d UR bisa dimiliki banyak orang.</p>
-                <p class="mb-05 color-danger">• Tier LIMITED bersifat EKSKLUSIF & UNIK.</p>
-                <p class="text-muted">Hanya 1 PLAYER yang bisa memiliki 1 ID karakter LIMITED. Jika sudah ada yang
+                <p class="mb-05 text-red-500">• Tier LIMITED bersifat EKSKLUSIF & UNIK.</p>
+                <p class="text-gray-500">Hanya 1 PLAYER yang bisa memiliki 1 ID karakter LIMITED. Jika sudah ada yang
                     punya, waifu tersebut tidak akan bisa didapat lagi!</p>
             </div>
         </div>
@@ -95,20 +95,20 @@ include BASE_PATH . '/views/partials/header.php';
                         }
 
                         resultDiv.innerHTML = `
-                            <h2 class="text-sm font-black color-primary mb-1">${data.message}</h2>
-                            <div class="waifu-card-mini ${cardClass}" style="margin: 0 auto; max-width: 200px;">
-                                <div class="tier-badge tier-${data.waifu.tier.toLowerCase()}">${data.waifu.tier}</div>
-                                <img src="${data.waifu.image_url}" class="waifu-img">
+                            <h2 class="text-sm font-black text-blue-600 mb-4">${data.message}</h2>
+                            <div class="p-2 border-2 border-gray-900 rounded-xl bg-white text-center transition-transform hover:-translate-y-1 relative ${cardClass}" style="margin: 0 auto; max-width: 200px;">
+                                <div class="absolute top-2 right-2 px-2 py-1 rounded-md text-[10px] font-black text-white border border-gray-900 z-10 tier-${data.waifu.tier.toLowerCase()}">${data.waifu.tier}</div>
+                                <img src="${data.waifu.image_url}" class="w-full rounded-lg border border-gray-900 aspect-square object-cover mb-2">
                                 <h3 class="text-sm font-black">${data.waifu.name}</h3>
                             </div>
                         `;
                         // Update dice count
                         diceCountSpan.innerText = parseInt(diceCountSpan.innerText) - 1;
                     } else {
-                        resultDiv.innerHTML = `<div class="card p-1 color-danger text-sm font-black">${data.error}</div>`;
+                        resultDiv.innerHTML = `<div class="bg-white border-2 border-gray-900 rounded-2xl p-6 mb-6 shadow-sm relative p-4 text-red-500 text-sm font-black">${data.error}</div>`;
                     }
                 } catch (e) {
-                    resultDiv.innerHTML = `<div class="card p-1 color-danger text-sm font-black">ERROR JARINGAN!</div>`;
+                    resultDiv.innerHTML = `<div class="bg-white border-2 border-gray-900 rounded-2xl p-6 mb-6 shadow-sm relative p-4 text-red-500 text-sm font-black">ERROR JARINGAN!</div>`;
                 }
 
                 // Cooldown logic

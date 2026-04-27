@@ -46,17 +46,17 @@
             </div>
             <ul class="sidebar-nav" style="list-style: none; display: flex; flex-direction: column; gap: 0.8rem;">
                 <li>
-                    <a href="index.php?url=admin/index" class="btn <?php echo !isset($_GET['url']) || $_GET['url'] == 'admin/index' ? '' : 'btn-secondary'; ?> mb-0" style="text-align: left; justify-content: flex-start; width: 100%;">
+                    <a href="index.php?url=admin/index" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm <?php echo !isset($_GET['url']) || $_GET['url'] == 'admin/index' ? '' : 'bg-yellow-400 text-gray-900 shadow-[6px_6px_0px_#3d5afe] active:shadow-[3px_3px_0px_#3d5afe]'; ?> mb-0" style="text-align: left; justify-content: flex-start; width: 100%;">
                         <i class="fa-solid fa-house" style="width: 20px;"></i> DASHBOARD
                     </a>
                 </li>
                 <li>
-                    <a href="index.php?url=admin/waifus" class="btn <?php echo isset($_GET['url']) && $_GET['url'] == 'admin/waifus' ? '' : 'btn-secondary'; ?> mb-0" style="text-align: left; justify-content: flex-start; width: 100%;">
+                    <a href="index.php?url=admin/waifus" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm <?php echo isset($_GET['url']) && $_GET['url'] == 'admin/waifus' ? '' : 'bg-yellow-400 text-gray-900 shadow-[6px_6px_0px_#3d5afe] active:shadow-[3px_3px_0px_#3d5afe]'; ?> mb-0" style="text-align: left; justify-content: flex-start; width: 100%;">
                         <i class="fa-solid fa-heart" style="width: 20px;"></i> KELOLA WAIFU
                     </a>
                 </li>
                 <li style="margin-top: auto; padding-top: 2rem;">
-                    <a href="index.php?url=auth/logout" class="btn btn-danger mb-0" style="text-align: left; justify-content: flex-start; width: 100%;">
+                    <a href="index.php?url=auth/logout" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm bg-red-500 shadow-[6px_6px_0px_#1a1a1a] mb-0" style="text-align: left; justify-content: flex-start; width: 100%;">
                         <i class="fa-solid fa-right-from-bracket" style="width: 20px;"></i> LOGOUT
                     </a>
                 </li>

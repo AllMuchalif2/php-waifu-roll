@@ -1,14 +1,14 @@
-<h2 class="mb-2">KELOLA WAIFU</h2>
+<h2 class="mb-8">KELOLA WAIFU</h2>
 
 <!-- Messages -->
 <?php include BASE_PATH . '/views/partials/messages.php'; ?>
 
 <!-- Fetch & Add Section -->
-<div class="card p-2 mb-2">
-    <h3 class="text-sm font-black mb-1"><i class="fa-solid fa-search color-primary"></i> CARI WAIFU (JIKAN API)</h3>
+<div class="bg-white border-2 border-gray-900 rounded-2xl p-6 mb-6 shadow-sm relative p-8 mb-8">
+    <h3 class="text-sm font-black mb-4"><i class="fa-solid fa-search text-blue-600"></i> CARI WAIFU (JIKAN API)</h3>
     <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
         <input type="text" id="search_query" placeholder="Ketik nama waifu..." class="mb-0">
-        <button onclick="searchWaifu()" class="btn w-auto mb-0" style="padding: 0 1.5rem;">CARI</button>
+        <button onclick="searchWaifu()" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm w-auto mb-0" style="padding: 0 1.5rem;">CARI</button>
     </div>
     <div id="search_results"
         style="display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; margin-top: 1rem;">
@@ -16,16 +16,16 @@
     </div>
 </div>
 
-<div class="card p-2 mb-2">
-    <h3 class="text-sm font-black mb-1"><i class="fa-solid fa-plus-circle color-primary"></i> FETCH BY ID / TAMBAH</h3>
+<div class="bg-white border-2 border-gray-900 rounded-2xl p-6 mb-6 shadow-sm relative p-8 mb-8">
+    <h3 class="text-sm font-black mb-4"><i class="fa-solid fa-plus-circle text-blue-600"></i> FETCH BY ID / TAMBAH</h3>
     <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
         <input type="number" id="jikan_id_input" placeholder="MAL ID" class="mb-0">
-        <button onclick="fetchWaifu()" class="btn w-auto mb-0" style="padding: 0 1.5rem;">FETCH</button>
+        <button onclick="fetchWaifu()" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm w-auto mb-0" style="padding: 0 1.5rem;">FETCH</button>
     </div>
 
     <form action="index.php?url=admin/addWaifu" method="POST" id="add_waifu_form" style="display: none;">
         <input type="hidden" name="jikan_id" id="form_jikan_id">
-        <div class="flex gap-1 mb-1" style="align-items: flex-start;">
+        <div class="flex gap-4 mb-4" style="align-items: flex-start;">
             <div style="flex: 1;">
                 <label class="text-xs font-black">NAMA WAIFU</label>
                 <input type="text" name="name" id="form_name" required>
@@ -43,17 +43,17 @@
                 </select>
             </div>
             <div style="width: 100px;">
-                <img id="preview_img" src="" class="waifu-img" style="display: none;">
+                <img id="preview_img" src="" class="w-full rounded-lg border border-gray-900 aspect-square object-cover mb-2" style="display: none;">
                 <input type="hidden" name="image_url" id="form_image_url">
             </div>
         </div>
-        <button type="submit" class="btn w-full mb-0">SIMPAN WAIFU BARU</button>
+        <button type="submit" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm w-full mb-0">SIMPAN WAIFU BARU</button>
     </form>
 </div>
 
 <!-- Edit Form (Hidden by default) -->
-<div id="edit_section" class="card p-2 mb-2" style="display: none; border-color: var(--primary-blue);">
-    <h3 class="text-sm font-black mb-1 color-primary"><i class="fa-solid fa-edit"></i> EDIT WAIFU</h3>
+<div id="edit_section" class="bg-white border-2 border-gray-900 rounded-2xl p-6 mb-6 shadow-sm relative p-8 mb-8" style="display: none; border-color: var(--primary-blue);">
+    <h3 class="text-sm font-black mb-4 text-blue-600"><i class="fa-solid fa-edit"></i> EDIT WAIFU</h3>
     <form action="index.php?url=admin/updateWaifu" method="POST">
         <input type="hidden" name="id" id="edit_id">
         <label class="text-xs font-black">NAMA WAIFU</label>
@@ -70,17 +70,17 @@
             <option value="UR">UR</option>
             <option value="LIMITED">LIMITED (1 UNIQUE)</option>
         </select>
-        <div class="flex gap-05">
-            <button type="submit" class="btn" style="flex: 2;">UPDATE DATA</button>
-            <button type="button" onclick="cancelEdit()" class="btn btn-secondary w-auto"
+        <div class="flex gap-2">
+            <button type="submit" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm" style="flex: 2;">UPDATE DATA</button>
+            <button type="button" onclick="cancelEdit()" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm bg-yellow-400 text-gray-900 shadow-[6px_6px_0px_#3d5afe] active:shadow-[3px_3px_0px_#3d5afe] w-auto"
                 style="flex: 1;">BATAL</button>
         </div>
     </form>
 </div>
 
 <!-- List Section -->
-<div class="card p-2 mb-2">
-    <h3 class="text-sm font-black mb-1"><i class="fa-solid fa-filter color-primary"></i> FILTER & SORT</h3>
+<div class="bg-white border-2 border-gray-900 rounded-2xl p-6 mb-6 shadow-sm relative p-8 mb-8">
+    <h3 class="text-sm font-black mb-4"><i class="fa-solid fa-filter text-blue-600"></i> FILTER & SORT</h3>
     <form action="index.php" method="GET" style="display: flex; flex-direction: column; gap: 0.8rem;">
         <input type="hidden" name="url" value="admin/waifus">
 
@@ -90,7 +90,7 @@
                 placeholder="..." class="mb-0">
         </div>
 
-        <div class="flex gap-05">
+        <div class="flex gap-2">
             <div style="flex: 1;">
                 <label class="text-xs font-black">TIER</label>
                 <select name="tier" class="mb-0">
@@ -118,16 +118,16 @@
             </div>
         </div>
 
-        <div class="flex gap-05">
-            <button type="submit" class="btn mb-0" style="flex: 2;">GAS FILTER</button>
-            <a href="index.php?url=admin/waifus" class="btn btn-secondary mb-0" style="flex: 1; padding: 0.6rem;"><i
+        <div class="flex gap-2">
+            <button type="submit" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm mb-0" style="flex: 2;">GAS FILTER</button>
+            <a href="index.php?url=admin/waifus" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm bg-yellow-400 text-gray-900 shadow-[6px_6px_0px_#3d5afe] active:shadow-[3px_3px_0px_#3d5afe] mb-0" style="flex: 1; padding: 0.6rem;"><i
                     class="fa-solid fa-rotate-left"></i></a>
         </div>
     </form>
 </div>
 
-<div class="card p-1">
-    <h3 class="text-sm font-black mb-1 px-1 pt-1"><i class="fa-solid fa-list color-primary"></i> POOL WAIFU</h3>
+<div class="bg-white border-2 border-gray-900 rounded-2xl p-6 mb-6 shadow-sm relative p-4">
+    <h3 class="text-sm font-black mb-4 px-1 pt-1"><i class="fa-solid fa-list text-blue-600"></i> POOL WAIFU</h3>
     <div style="overflow-x: auto;">
         <table class="ranking-table w-full">
             <thead>
@@ -147,20 +147,20 @@
                         </td>
                         <td>
                             <div class="text-sm font-black"><?php echo htmlspecialchars($w['name']); ?></div>
-                            <div class="text-xs text-muted">ID: <?php echo $w['jikan_id']; ?></div>
+                            <div class="text-xs text-gray-500">ID: <?php echo $w['jikan_id']; ?></div>
                         </td>
                         <td>
-                            <span class="tier-badge tier-<?php echo strtolower($w['tier']); ?>" style="position: static;">
+                            <span class="absolute top-2 right-2 px-2 py-1 rounded-md text-[10px] font-black text-white border border-gray-900 z-10 tier-<?php echo strtolower($w['tier']); ?>" style="position: static;">
                                 <?php echo $w['tier']; ?>
                             </span>
                         </td>
                         <td>
-                            <div class="flex gap-05">
+                            <div class="flex gap-2">
                                 <button onclick="editWaifu(<?php echo htmlspecialchars(json_encode($w)); ?>)"
-                                    class="btn btn-secondary mb-0" style="padding: 0.4rem; font-size: 0.8rem; flex: 1;"><i
+                                    class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm bg-yellow-400 text-gray-900 shadow-[6px_6px_0px_#3d5afe] active:shadow-[3px_3px_0px_#3d5afe] mb-0" style="padding: 0.4rem; font-size: 0.8rem; flex: 1;"><i
                                         class="fa-solid fa-pen"></i></button>
                                 <a href="index.php?url=admin/deleteWaifu&id=<?php echo $w['id']; ?>"
-                                    onclick="return confirm('Hapus waifu ini?')" class="btn btn-danger mb-0"
+                                    onclick="return confirm('Hapus waifu ini?')" class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm bg-red-500 shadow-[6px_6px_0px_#1a1a1a] mb-0"
                                     style="padding: 0.4rem; font-size: 0.8rem; flex: 1;"><i
                                         class="fa-solid fa-trash"></i></a>
                             </div>
@@ -172,7 +172,7 @@
     </div>
 
     <!-- Pagination -->
-    <div class="flex-center mt-2 mb-1 gap-05">
+    <div class="flex justify-center items-center mt-8 mb-4 gap-2">
         <?php if ($pagination['total_pages'] > 1): ?>
             <?php
             $queryParams = $_GET;
@@ -182,7 +182,7 @@
             <?php if ($pagination['current_page'] > 1): ?>
                 <?php $queryParams['page'] = $pagination['current_page'] - 1; ?>
                 <a href="index.php?url=admin/waifus&<?php echo http_build_query($queryParams); ?>"
-                    class="btn btn-secondary w-auto mb-0" style="padding: 0.4rem 0.8rem;">PREV</a>
+                    class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm bg-yellow-400 text-gray-900 shadow-[6px_6px_0px_#3d5afe] active:shadow-[3px_3px_0px_#3d5afe] w-auto mb-0" style="padding: 0.4rem 0.8rem;">PREV</a>
             <?php endif; ?>
 
             <div class="text-xs font-black">
@@ -192,7 +192,7 @@
             <?php if ($pagination['current_page'] < $pagination['total_pages']): ?>
                 <?php $queryParams['page'] = $pagination['current_page'] + 1; ?>
                 <a href="index.php?url=admin/waifus&<?php echo http_build_query($queryParams); ?>"
-                    class="btn btn-secondary w-auto mb-0" style="padding: 0.4rem 0.8rem;">NEXT</a>
+                    class="inline-flex items-center justify-center gap-2 w-full py-3 px-6 bg-blue-600 text-white border-2 border-gray-900 rounded-xl font-bold uppercase transition-all shadow-[6px_6px_0px_#ffea00] active:translate-x-[3px] active:translate-y-[3px] active:shadow-[3px_3px_0px_#ffea00] mb-4 text-sm bg-yellow-400 text-gray-900 shadow-[6px_6px_0px_#3d5afe] active:shadow-[3px_3px_0px_#3d5afe] w-auto mb-0" style="padding: 0.4rem 0.8rem;">NEXT</a>
             <?php endif; ?>
         <?php endif; ?>
     </div>
@@ -223,11 +223,11 @@
                 if (data && data.length > 0) {
                     data.forEach(item => {
                         const div = document.createElement('div');
-                        div.className = 'waifu-card-mini';
+                        div.className = 'p-2 border-2 border-gray-900 rounded-xl bg-white text-center transition-transform hover:-translate-y-1 relative';
                         div.style.padding = '0.4rem';
                         div.style.cursor = 'pointer';
                         div.innerHTML = `
-                        <img src="${item.images.jpg.image_url}" class="waifu-img" style="margin-bottom: 4px;">
+                        <img src="${item.images.jpg.image_url}" class="w-full rounded-lg border border-gray-900 aspect-square object-cover mb-2" style="margin-bottom: 4px;">
                         <div class="text-xs font-black" style="font-size: 0.6rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.name}</div>
                     `;
                         div.onclick = () => {
