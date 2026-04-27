@@ -1,6 +1,6 @@
-<?php 
+<?php
 $title = "Gacha Roll - Waifu Gacha";
-include BASE_PATH . '/views/partials/header.php'; 
+include BASE_PATH . '/views/partials/header.php';
 ?>
 
 <body class="pb-80">
@@ -9,7 +9,8 @@ include BASE_PATH . '/views/partials/header.php';
     <div class="container">
         <div class="card text-center">
             <h1 style="font-size: 1.5rem; margin-bottom: 1.5rem;">
-                <i class="fa-solid fa-dice color-primary"></i> DADU: <span id="dice-count" class="color-danger"><?php echo $user['dice_count']; ?></span>
+                <i class="fa-solid fa-dice color-primary"></i> DADU: <span id="dice-count"
+                    class="color-danger"><?php echo $user['dice_count']; ?></span>
             </h1>
             <button id="roll-btn" class="btn">GAS GACHA!</button>
             <div id="gacha-result" style="margin-top: 1.5rem;"></div>
@@ -21,7 +22,8 @@ include BASE_PATH . '/views/partials/header.php';
             <div class="text-xs font-bold opacity-08">
                 <p class="mb-05">• Tier C s/d UR bisa dimiliki banyak orang.</p>
                 <p class="mb-05 color-danger">• Tier LIMITED bersifat EKSKLUSIF & UNIK.</p>
-                <p class="text-muted">Hanya 1 PLAYER yang bisa memiliki 1 ID karakter LIMITED. Jika sudah ada yang punya, waifu tersebut tidak akan bisa didapat lagi!</p>
+                <p class="text-muted">Hanya 1 PLAYER yang bisa memiliki 1 ID karakter LIMITED. Jika sudah ada yang
+                    punya, waifu tersebut tidak akan bisa didapat lagi!</p>
             </div>
         </div>
     </div>
@@ -38,7 +40,7 @@ include BASE_PATH . '/views/partials/header.php';
 
             async function executeRoll() {
                 if (rollBtn.disabled) return;
-                
+
                 rollBtn.disabled = true;
                 const originalText = rollBtn.innerHTML;
                 resultDiv.innerHTML = '<h3 class="text-sm"><i class="fa-solid fa-spinner fa-spin"></i> LAGI GACHA...</h3>';
@@ -65,7 +67,7 @@ include BASE_PATH . '/views/partials/header.php';
                             const count = data.waifu.tier === 'LIMITED' ? 50 : (data.waifu.tier === 'UR' ? 35 : 20);
                             const icon = data.waifu.tier === 'LIMITED' ? 'fa-crown' : (data.waifu.tier === 'UR' ? 'fa-bolt' : 'fa-star');
                             const color = data.waifu.tier === 'UR' ? '#ff6b6b' : '#fcc419';
-                            
+
                             for (let i = 0; i < count; i++) {
                                 const p = document.createElement("i");
                                 p.className = `fa-solid ${icon}`;
@@ -110,7 +112,7 @@ include BASE_PATH . '/views/partials/header.php';
                 }
 
                 // Cooldown logic
-                let cooldown = 3;
+                let cooldown = 2;
                 const timer = setInterval(() => {
                     cooldown--;
                     if (cooldown <= 0) {
@@ -125,5 +127,5 @@ include BASE_PATH . '/views/partials/header.php';
             }
         });
     </script>
-    
+
     <?php include BASE_PATH . '/views/partials/footer.php'; ?>

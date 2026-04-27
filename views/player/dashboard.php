@@ -34,8 +34,9 @@ include BASE_PATH . '/views/partials/header.php';
 
         <!-- Quick Actions -->
         <div class="flex gap-1 mb-2">
-            <a href="index.php?url=gacha/roll" class="btn mb-0"><i class="fa-solid fa-dice"></i> GACHA!</a>
-            <a href="index.php?url=scoreboard/index" class="btn btn-secondary mb-0"><i class="fa-solid fa-trophy"></i> RANK</a>
+            <a href="index.php?url=gacha/roll" class="btn mb-0" style="padding: 0.6rem;"><i class="fa-solid fa-dice"></i> GACHA</a>
+            <a href="index.php?url=scoreboard/index" class="btn btn-secondary mb-0" style="padding: 0.6rem;"><i class="fa-solid fa-trophy"></i> RANK</a>
+            <a href="index.php?url=gacha/history" class="btn btn-alt mb-0" style="padding: 0.6rem;"><i class="fa-solid fa-clock-rotate-left"></i> HISTORY</a>
         </div>
 
         <!-- Dice Shop -->

@@ -16,6 +16,10 @@
         <i class="fa-solid fa-dice"></i>
         <span>Roll</span>
     </a>
+    <a href="index.php?url=home/pool" class="nav-item <?php echo isset($_GET['url']) && $_GET['url'] == 'home/pool' ? 'active' : ''; ?>">
+        <i class="fa-solid fa-list"></i>
+        <span>Pool</span>
+    </a>
     <a href="index.php?url=gacha/index" class="nav-item <?php echo isset($_GET['url']) && ($_GET['url'] == 'gacha/index' || $_GET['url'] == 'player/dashboard') ? 'active' : ''; ?>">
         <i class="fa-solid fa-heart"></i>
         <span>Collection</span>

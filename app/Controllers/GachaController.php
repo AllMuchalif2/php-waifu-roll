@@ -170,6 +170,10 @@ class GachaController extends Controller
 
             $stmt = $this->db->prepare("INSERT INTO user_waifus (user_id, waifu_id) VALUES (?, ?)");
             $stmt->execute([$userId, $waifuId]);
+            
+            $stmtHistory = $this->db->prepare("INSERT INTO gacha_history (user_id, waifu_id) VALUES (?, ?)");
+            $stmtHistory->execute([$userId, $waifuId]);
+
             $message = "Anda mendapatkan karakter tier " . $selectedTier;
 
             $this->db->commit();
@@ -193,6 +197,35 @@ class GachaController extends Controller
     {
         $user = $this->userModel->findById($_SESSION['user_id']);
         $this->view('player/roll', ['user' => $user]);
+    }
+
+    public function history()
+    {
+        $userId = $_SESSION['user_id'];
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        if ($page < 1) $page = 1;
+        $limit = 15;
+        $offset = ($page - 1) * $limit;
+
+        $stmt = $this->db->prepare("SELECT h.*, w.name, w.image_url, w.tier FROM gacha_history h JOIN waifu_pool w ON h.waifu_id = w.id WHERE h.user_id = ? ORDER BY h.created_at DESC LIMIT ? OFFSET ?");
+        $stmt->bindValue(1, $userId, \PDO::PARAM_INT);
+        $stmt->bindValue(2, $limit, \PDO::PARAM_INT);
+        $stmt->bindValue(3, $offset, \PDO::PARAM_INT);
+        $stmt->execute();
+        $history = $stmt->fetchAll();
+
+        $stmtCount = $this->db->prepare("SELECT COUNT(*) FROM gacha_history WHERE user_id = ?");
+        $stmtCount->execute([$userId]);
+        $totalItems = $stmtCount->fetchColumn();
+        $totalPages = ceil($totalItems / $limit);
+
+        $this->view('player/history', [
+            'history' => $history,
+            'pagination' => [
+                'current_page' => $page,
+                'total_pages' => $totalPages
+            ]
+        ]);
     }
 
     public function daily()

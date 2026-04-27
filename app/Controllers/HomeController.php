@@ -4,14 +4,18 @@ namespace App\Controllers;
 
 use App\Core\Controller;
 use App\Core\Database;
+use App\Models\Waifu;
 
 class HomeController extends Controller
 {
     private $db;
 
+    private $waifuModel;
+
     public function __construct()
     {
         $this->db = Database::getInstance()->getConnection();
+        $this->waifuModel = new Waifu();
     }
 
     public function index()
@@ -51,6 +55,37 @@ class HomeController extends Controller
         $this->view('home/index', [
             'topWaifus' => $topWaifus,
             'rankings' => $rankings
+        ]);
+    }
+
+    public function pool()
+    {
+        $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+        if ($page < 1) $page = 1;
+        $limit = 20;
+        $offset = ($page - 1) * $limit;
+
+        $filters = [
+            'search' => $_GET['search'] ?? '',
+            'tier' => $_GET['tier'] ?? '',
+            'sort' => $_GET['sort'] ?? 'id',
+            'order' => $_GET['order'] ?? 'DESC',
+            'limit' => $limit,
+            'offset' => $offset
+        ];
+
+        $waifus = $this->waifuModel->getAll($filters);
+        $totalItems = $this->waifuModel->countAll($filters);
+        $totalPages = ceil($totalItems / $limit);
+
+        $this->view('home/pool', [
+            'waifus' => $waifus,
+            'filters' => $filters,
+            'pagination' => [
+                'current_page' => $page,
+                'total_pages' => $totalPages,
+                'total_items' => $totalItems
+            ]
         ]);
     }
 }
